@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>AI GRC Drafting Assistant (MVP)</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="wrap">
+    <h1>AI GRC Drafting Assistant</h1>
+    <p class="sub">MVP UI — upload/paste text, pick a task, generate output.</p>
+  </header>
+
+  <main class="wrap grid">
+    <section class="card">
+      <h2>1) Input</h2>
+
+      <label class="label">Source</label>
+      <div class="row">
+        <input id="file" type="file" accept=".txt,.md,.doc,.docx,.pdf" />
+        <button id="loadSample" class="btn secondary" type="button">Load sample</button>
+      </div>
+      <p class="hint">Tip: PDF/DOCX parsing needs backend support later. For now, paste text below.</p>
+
+      <label class="label" for="inputText">Paste text (policy / standard / RTS excerpt)</label>
+      <textarea id="inputText" placeholder="Paste your text here..."></textarea>
+
+      <div class="row">
+        <button id="clear" class="btn secondary" type="button">Clear</button>
+        <div class="spacer"></div>
+        <span id="chars" class="meta">0 chars</span>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>2) Task</h2>
+
+      <label class="label" for="task">Choose output</label>
+      <select id="task">
+        <option value="gaps">Gap summary (what’s missing / unclear)</option>
+        <option value="controls">Draft control wording (ISO-ish control text)</option>
+        <option value="mapping">Map to frameworks (DORA / ISO 27001 / NIST CSF)</option>
+      </select>
+
+      <label class="label" for="tone">Tone</label>
+      <select id="tone">
+        <option value="board">Board-ready (crisp, low jargon)</option>
+        <option value="practitioner">Practitioner (actionable, detailed)</option>
+        <option value="audit">Audit-friendly (objective, evidence-focused)</option>
+      </select>
+
+      <label class="label" for="format">Output format</label>
+      <select id="format">
+        <option value="markdown">Markdown</option>
+        <option value="plain">Plain text</option>
+      </select>
+
+      <div class="row">
+        <button id="generate" class="btn primary" type="button">Generate</button>
+        <button id="demoMode" class="btn secondary" type="button" title="Uses a local fake response">Demo mode</button>
+      </div>
+
+      <p id="status" class="status"></p>
+      <p class="hint">
+        Next step: wire <code>/api/generate</code> to your backend (OpenAI call).
+      </p>
+    </section>
+
+    <section class="card full">
+      <h2>3) Output</h2>
+
+      <div class="row">
+        <button id="copy" class="btn secondary" type="button">Copy</button>
+        <button id="download" class="btn secondary" type="button">Download .md</button>
+        <div class="spacer"></div>
+        <span id="timer" class="meta"></span>
+      </div>
+
+      <pre id="output" class="output" aria-live="polite"></pre>
+    </section>
+  </main>
+
+  <footer class="wrap foot">
+    <span class="meta">MVP UI only • No data leaves your machine until you add the backend.</span>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
