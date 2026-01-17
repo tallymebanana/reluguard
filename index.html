@@ -1,88 +1,158 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>AI GRC Drafting Assistant (MVP)</title>
-  <link rel="stylesheet" href="styles.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ReluGuard — ISO 27001 Audit-Ready Policy Generator</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <header class="wrap">
-    <h1>AI GRC Drafting Assistant</h1>
-    <p class="sub">MVP UI — upload/paste text, pick a task, generate output.</p>
+  <div class="bg"></div>
+
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo" aria-hidden="true">RG</div>
+      <div class="brand-text">
+        <div class="brand-title">ReluGuard</div>
+        <div class="brand-subtitle">ISO 27001 Audit-Ready Policy Generator</div>
+      </div>
+    </div>
+    <div class="pill">MVP</div>
   </header>
 
-  <main class="wrap grid">
-    <section class="card">
-      <h2>1) Input</h2>
-
-      <label class="label">Source</label>
-      <div class="row">
-        <input id="file" type="file" accept=".txt,.md,.doc,.docx,.pdf" />
-        <button id="loadSample" class="btn secondary" type="button">Load sample</button>
-      </div>
-      <p class="hint">Tip: PDF/DOCX parsing needs backend support later. For now, paste text below.</p>
-
-      <label class="label" for="inputText">Paste text (policy / standard / RTS excerpt)</label>
-      <textarea id="inputText" placeholder="Paste your text here..."></textarea>
-
-      <div class="row">
-        <button id="clear" class="btn secondary" type="button">Clear</button>
-        <div class="spacer"></div>
-        <span id="chars" class="meta">0 chars</span>
-      </div>
-    </section>
-
-    <section class="card">
-      <h2>2) Task</h2>
-
-      <label class="label" for="task">Choose output</label>
-      <select id="task">
-        <option value="gaps">Gap summary (what’s missing / unclear)</option>
-        <option value="controls">Draft control wording (ISO-ish control text)</option>
-        <option value="mapping">Map to frameworks (DORA / ISO 27001 / NIST CSF)</option>
-      </select>
-
-      <label class="label" for="tone">Tone</label>
-      <select id="tone">
-        <option value="board">Board-ready (crisp, low jargon)</option>
-        <option value="practitioner">Practitioner (actionable, detailed)</option>
-        <option value="audit">Audit-friendly (objective, evidence-focused)</option>
-      </select>
-
-      <label class="label" for="format">Output format</label>
-      <select id="format">
-        <option value="markdown">Markdown</option>
-        <option value="plain">Plain text</option>
-      </select>
-
-      <div class="row">
-        <button id="generate" class="btn primary" type="button">Generate</button>
-        <button id="demoMode" class="btn secondary" type="button" title="Uses a local fake response">Demo mode</button>
-      </div>
-
-      <p id="status" class="status"></p>
-      <p class="hint">
-        Live generation is enabled. Please avoid pasting confidential material.
+  <main class="container">
+    <section class="hero">
+      <h1>ISO 27001 Audit-Ready Information Security Policy</h1>
+      <p class="lede">
+        Generate a defensible policy artefact with <strong>assumptions</strong>, <strong>declared gaps</strong>, and an <strong>ISO traceability map</strong>.
+      </p>
+      <p class="note">
+        This tool produces a review-ready policy artefact — <strong>not</strong> a compliance verdict.
       </p>
     </section>
 
-    <section class="card full">
-      <h2>3) Output</h2>
+    <section class="grid">
+      <!-- 1) Context -->
+      <section class="card">
+        <div class="card-head">
+          <h2>1) Organisation context</h2>
+          <p class="muted">These inputs guide structure and scope. They do not declare compliance.</p>
+        </div>
 
-      <div class="row">
-        <button id="copy" class="btn secondary" type="button">Copy</button>
-        <button id="download" class="btn secondary" type="button">Download .md</button>
-        <div class="spacer"></div>
-        <span id="timer" class="meta"></span>
-      </div>
+        <div class="form">
+          <div class="field">
+            <label for="orgType">Organisation type</label>
+            <input id="orgType" type="text" placeholder="e.g. fintech, SaaS, professional services" />
+          </div>
 
-      <pre id="output" class="output" aria-live="polite"></pre>
+          <div class="field">
+            <label for="orgSize">Organisation size</label>
+            <select id="orgSize">
+              <option value="1–10">1–10</option>
+              <option value="11–50" selected>11–50</option>
+              <option value="51–250">51–250</option>
+              <option value="250+">250+</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="driver">Primary regulatory driver</label>
+            <select id="driver" disabled>
+              <option value="ISO/IEC 27001" selected>ISO/IEC 27001 (fixed for v1)</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="posture">Target compliance posture</label>
+            <select id="posture">
+              <option value="Minimum compliant">Minimum compliant</option>
+              <option value="Reasonable baseline" selected>Reasonable baseline</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="outOfScope">Anything unusual or out of scope? (optional)</label>
+            <textarea id="outOfScope" rows="3" placeholder="e.g. heavy outsourcing, cloud-only, no on-prem"></textarea>
+          </div>
+
+          <div class="callout">
+            <span class="callout-dot" aria-hidden="true"></span>
+            <div>
+              <div class="callout-title">Tip</div>
+              <div class="callout-text">Avoid pasting confidential or customer data.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2) Output + Generate -->
+      <section class="card">
+        <div class="card-head">
+          <h2>2) Output you will receive</h2>
+          <p class="muted">What you get is designed to be reviewed, adapted, and approved by a human.</p>
+        </div>
+
+        <ul class="checklist">
+          <li>ISO 27001-aligned Information Security Policy</li>
+          <li>Explicit assumptions and scope boundaries</li>
+          <li>Declared gaps and organisation-specific decisions</li>
+          <li>ISO intent-level traceability map</li>
+          <li>“How this was produced” audit note</li>
+        </ul>
+
+        <div class="actions">
+          <button id="btnGenerate" class="btn primary">Generate audit-ready policy</button>
+          <button id="btnDemo" class="btn">Demo mode (no backend call)</button>
+        </div>
+
+        <div class="safety">
+          <span class="badge live">Live</span>
+          <span>Live generation is enabled. Please avoid pasting confidential material.</span>
+        </div>
+
+        <div id="status" class="status" role="status" aria-live="polite"></div>
+      </section>
+
+      <!-- 3) Source text (kept, but reframed) -->
+      <section class="card span-2">
+        <div class="card-head">
+          <h2>Source notes (optional)</h2>
+          <p class="muted">
+            Add any non-sensitive context you want reflected in the policy (e.g., “cloud-first”, “remote workforce”, “handles payment data”).
+          </p>
+        </div>
+
+        <div class="field">
+          <textarea id="sourceText" rows="6" placeholder="Paste non-sensitive notes here…"></textarea>
+        </div>
+      </section>
+
+      <!-- 4) Output -->
+      <section class="card span-2">
+        <div class="card-head row">
+          <div>
+            <h2>3) Generated artefact</h2>
+            <p class="muted">
+              This output is intentionally bounded to avoid over-claiming. Assumptions, exclusions, and gaps are explicitly declared.
+            </p>
+          </div>
+          <div class="row-actions">
+            <button id="btnCopy" class="btn small">Copy</button>
+            <button id="btnDownload" class="btn small">Download (.md)</button>
+          </div>
+        </div>
+
+        <pre id="output" class="output" tabindex="0"></pre>
+
+        <p class="fineprint">
+          ReluGuard supports drafting and decision-making. It does not certify compliance or replace professional judgement.
+        </p>
+      </section>
     </section>
   </main>
 
-  <footer class="wrap foot">
-    <span class="meta">MVP UI only • No data leaves your machine until you add the backend.</span>
+  <footer class="footer">
+    <div>© <span id="year"></span> ReluGuard • MVP</div>
   </footer>
 
   <script src="app.js"></script>
