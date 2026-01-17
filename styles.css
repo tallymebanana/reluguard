@@ -1,91 +1,159 @@
 :root{
-  --bg:#0b0f14;
-  --card:#111826;
-  --text:#e8eef7;
-  --muted:#a9b4c3;
-  --line:#233044;
-  --btn:#2a3a52;
-  --btn2:#1b2637;
-  --accent:#6ee7ff;
-  --danger:#ff6b6b;
+  --bg: #0b1220;
+  --surface: rgba(255,255,255,0.07);
+  --surface-2: rgba(255,255,255,0.10);
+  --stroke: rgba(255,255,255,0.12);
+  --text: rgba(255,255,255,0.92);
+  --muted: rgba(255,255,255,0.68);
+  --muted-2: rgba(255,255,255,0.52);
+  --shadow: 0 20px 60px rgba(0,0,0,0.45);
+  --radius: 16px;
+  --radius-sm: 12px;
+  --pad: 18px;
+  --max: 1100px;
+
+  /* Light-but-premium palette on dark background */
+  --accent: #67e8f9;         /* cyan */
+  --accent-2: #a78bfa;       /* purple */
+  --good: #34d399;           /* green */
+  --warn: #fbbf24;           /* amber */
 }
 
-*{box-sizing:border-box}
+*{ box-sizing: border-box; }
+html,body{ height:100%; }
 body{
   margin:0;
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-  background: radial-gradient(1200px 600px at 10% 0%, #122034, var(--bg));
-  color:var(--text);
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  color: var(--text);
+  background: radial-gradient(1200px 700px at 20% 0%, rgba(103,232,249,0.12), transparent 60%),
+              radial-gradient(900px 600px at 85% 20%, rgba(167,139,250,0.12), transparent 55%),
+              radial-gradient(700px 500px at 50% 90%, rgba(52,211,153,0.10), transparent 60%),
+              #070b12;
 }
-.wrap{max-width:1100px;margin:0 auto;padding:18px}
-h1{margin:0 0 6px 0;font-size:26px;letter-spacing:.2px}
-.sub{margin:0;color:var(--muted)}
+
+.bg{
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(900px 500px at 15% 10%, rgba(103,232,249,0.10), transparent 60%),
+    radial-gradient(700px 450px at 85% 25%, rgba(167,139,250,0.10), transparent 55%),
+    radial-gradient(900px 650px at 50% 110%, rgba(52,211,153,0.08), transparent 60%);
+  pointer-events: none;
+  filter: blur(0px);
+}
+
+.topbar{
+  display:flex;
+  align-items:center;
+  justify-content: space-between;
+  padding: 18px 20px;
+  max-width: var(--max);
+  margin: 0 auto;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap: 12px;
+}
+
+.logo{
+  width: 40px;
+  height: 40px;
+  border-radius: 14px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  color: rgba(0,0,0,0.78);
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  box-shadow: 0 16px 40px rgba(0,0,0,0.35);
+}
+
+.brand-title{
+  font-weight: 800;
+  letter-spacing: 0.2px;
+}
+.brand-subtitle{
+  color: var(--muted);
+  font-size: 13px;
+  margin-top: 2px;
+}
+
+.pill{
+  font-size: 12px;
+  color: rgba(0,0,0,0.75);
+  background: rgba(255,255,255,0.9);
+  padding: 6px 10px;
+  border-radius: 999px;
+}
+
+.container{
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 20px 60px;
+}
+
+.hero{
+  padding: 12px 0 10px;
+}
+
+h1{
+  margin: 6px 0 8px;
+  font-size: 34px;
+  line-height: 1.15;
+  letter-spacing: -0.5px;
+}
+
+.lede{
+  margin: 0 0 10px;
+  color: var(--muted);
+  max-width: 74ch;
+}
+
+.note{
+  margin: 0;
+  color: var(--muted-2);
+  font-size: 13.5px;
+}
+
 .grid{
   display:grid;
   grid-template-columns: 1fr 1fr;
-  gap:14px;
+  gap: 16px;
+  margin-top: 16px;
 }
+
 .card{
-  background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
-  border:1px solid var(--line);
-  border-radius:14px;
-  padding:14px;
-  box-shadow: 0 12px 40px rgba(0,0,0,.25);
+  background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.06));
+  border: 1px solid var(--stroke);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: var(--pad);
 }
-.card.full{grid-column:1 / -1}
-h2{margin:0 0 10px 0;font-size:16px;color:#d7e3f4}
-.label{display:block;margin:12px 0 6px;color:var(--muted);font-size:13px}
-textarea{
-  width:100%;
-  min-height:220px;
-  resize:vertical;
-  padding:10px 12px;
-  border-radius:10px;
-  border:1px solid var(--line);
-  background:#0c121d;
-  color:var(--text);
-  outline:none;
+
+.card.span-2{ grid-column: span 2; }
+
+.card-head{
+  margin-bottom: 14px;
 }
-select, input[type="file"]{
-  width:100%;
-  padding:10px 12px;
-  border-radius:10px;
-  border:1px solid var(--line);
-  background:#0c121d;
-  color:var(--text);
+
+.card-head.row{
+  display:flex;
+  align-items:flex-start;
+  justify-content: space-between;
+  gap: 12px;
 }
-.row{display:flex;gap:10px;align-items:center;margin-top:10px}
-.spacer{flex:1}
-.btn{
-  border:1px solid var(--line);
-  background: var(--btn2);
-  color:var(--text);
-  padding:10px 12px;
-  border-radius:10px;
-  cursor:pointer;
-  user-select:none;
+
+h2{
+  margin: 0 0 6px;
+  font-size: 16px;
+  letter-spacing: 0.2px;
 }
-.btn.primary{
-  background: linear-gradient(180deg, rgba(110,231,255,.25), rgba(110,231,255,.10));
-  border-color: rgba(110,231,255,.35);
-}
-.btn.secondary{background: var(--btn2)}
-.btn:active{transform: translateY(1px)}
-.hint{color:var(--muted);font-size:12px;margin:10px 0 0}
-.meta{color:var(--muted);font-size:12px}
-.status{margin:10px 0 0;color:var(--muted);font-size:13px}
-.output{
-  background:#0c121d;
-  border:1px solid var(--line);
-  border-radius:12px;
-  padding:12px;
-  min-height:240px;
-  overflow:auto;
-  white-space:pre-wrap;
-  line-height:1.35;
-}
-.foot{padding-top:0;padding-bottom:24px}
-code{color:var(--accent)}
-@media (max-width: 900px){
-  .grid{grid-template-columns:1fr}
-}
+
+.muted{
+  margin:0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.35
