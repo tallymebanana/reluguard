@@ -83,66 +83,80 @@
         </div>
       </div>
 
-      <aside class="card heroRight">
-        <div class="formTitle">Request the template</div>
-        <div class="formSub">No payment yet. This is an early request list.</div>
+     <aside class="card heroRight">
+  <div class="formTitle">Get the template</div>
+  <div class="formSub">Buy now (instant) or request access (early list).</div>
 
-        <form id="leadForm">
-          <div class="row">
-            <label>
-              <span>Organisation (optional)</span>
-              <input id="orgName" type="text" placeholder="e.g., Acme Ltd" autocomplete="organization" />
-            </label>
+  <!-- 🔥 Buy now -->
+  <a id="buyBtn" class="buyBtn" href="#" target="_blank" rel="noopener">
+    Buy now — €99
+  </a>
+  <div class="finePrint" style="margin-top:8px">
+    Instant checkout via Stripe. You’ll receive a confirmation email right away.
+  </div>
 
-            <label>
-              <span>Work email</span>
-              <input id="email" type="email" placeholder="you@company.com" autocomplete="email" required />
-            </label>
-          </div>
+  <div class="hr"></div>
 
-          <div class="row">
-            <label>
-              <span>Role</span>
-              <select id="role">
-                <option>GRC / Compliance</option>
-                <option>Information Security</option>
-                <option>IT / Engineering</option>
-                <option>Operations</option>
-                <option>Executive / Founder</option>
-                <option>Other</option>
-              </select>
-            </label>
+  <!-- Early request form stays -->
+  <div class="formTitle" style="margin-top:0">Or request the template</div>
+  <div class="formSub">No payment — join the early request list.</div>
 
-            <label>
-              <span>Company size</span>
-              <select id="companySize">
-                <option>1-50</option>
-                <option>51-200</option>
-                <option>201-1000</option>
-                <option>1000+</option>
-              </select>
-            </label>
-          </div>
+  <form id="leadForm">
+    <div class="row">
+      <label>
+        <span>Organisation (optional)</span>
+        <input id="orgName" type="text" placeholder="e.g., Acme Ltd" autocomplete="organization" />
+      </label>
 
-          <label>
-            <span>What do you want first?</span>
-            <select id="useCase">
-              <option>AI usage policy (Copilot + general GenAI)</option>
-              <option>AI acceptable use (general)</option>
-              <option>Data handling & classification guidance</option>
-              <option>Incident response playbook</option>
-            </select>
-          </label>
+      <label>
+        <span>Work email</span>
+        <input id="email" type="email" placeholder="you@company.com" autocomplete="email" required />
+      </label>
+    </div>
 
-          <button id="submitBtn" type="submit">Request the template</button>
+    <div class="row">
+      <label>
+        <span>Role</span>
+        <select id="role">
+          <option>GRC / Compliance</option>
+          <option>Information Security</option>
+          <option>IT / Engineering</option>
+          <option>Operations</option>
+          <option>Executive / Founder</option>
+          <option>Other</option>
+        </select>
+      </label>
 
-          <div id="formMsg" class="formMsg" aria-live="polite"></div>
+      <label>
+        <span>Company size</span>
+        <select id="companySize">
+          <option>1-50</option>
+          <option>51-200</option>
+          <option>201-1000</option>
+          <option>1000+</option>
+        </select>
+      </label>
+    </div>
 
-          <div class="finePrint">
-            By requesting, you agree we can email you about this template. No spam. Payments will be added after we validate demand.
-          </div>
-        </form>
-      </aside>
+    <label>
+      <span>What do you want first?</span>
+      <select id="useCase">
+        <option>AI usage policy (Copilot + general GenAI)</option>
+        <option>AI acceptable use (general)</option>
+        <option>Data handling & classification guidance</option>
+        <option>Incident response playbook</option>
+      </select>
+    </label>
+
+    <button id="submitBtn" type="submit">Request the template</button>
+
+    <div id="formMsg" class="formMsg" aria-live="polite"></div>
+
+    <div class="finePrint">
+      By requesting, you agree we can email you about this template. No spam.
+    </div>
+  </form>
+</aside>
     </section>
 
     <footer class="footer">
