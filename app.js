@@ -1,146 +1,87 @@
-// app.js — ReluGuard v1 UI logic (ISO 27001 Policy only)
+(function () {
+  const year = document.getElementById("year");
+  if (year) year.textContent = String(new Date().getFullYear());
 
-const $ = (id) => document.getElementById(id);
+  const form = document.getElementById("leadForm");
+  const msg = document.getElementById("formMsg");
+  const btn = document.getElementById("submitBtn");
 
-const orgType = $("orgType");
-const orgSize = $("orgSize");
-const posture = $("posture");
-const notes = $("notes");
-const format = $("format");
+  if (!form) return;
 
-const generateBtn = $("generateBtn");
-const demoBtn = $("demoBtn");
-const statusEl = $("status");
-const outputEl = $("output");
-const copyBtn = $("copyBtn");
-const downloadBtn = $("downloadBtn");
-const themeToggle = $("themeToggle");
+  function setMsg(text, type) {
+    if (!msg) return;
+    msg.textContent = text || "";
+    msg.classList.remove("ok", "err");
+    if (type === "ok") msg.classList.add("ok");
+    if (type === "err") msg.classList.add("err");
+  }
 
-function setStatus(msg, kind = "") {
-  statusEl.textContent = msg || "";
-  statusEl.className = "status" + (kind ? ` ${kind}` : "");
-}
+  function isValidEmail(email) {
+    const e = String(email || "").trim();
+    return e.includes("@") && e.includes(".");
+  }
 
-function buildUserContext() {
-  const parts = [];
-  parts.push(`Organisation type: ${orgType.value || "(not specified)"}`);
-  parts.push(`Organisation size: ${orgSize.value || "(not specified)"}`);
-  parts.push(`Regulatory driver: ISO/IEC 27001`);
-  parts.push(`Target compliance posture: ${posture.value || "(not specified)"}`);
-  if ((notes.value || "").trim()) parts.push(`Notes / scope: ${notes.value.trim()}`);
-  return parts.join("\n");
-}
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-function downloadText(filename, text) {
-  const blob = new Blob([text], { type: "text/plain;charset=utf-8" });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = filename;
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-  URL.revokeObjectURL(url);
-}
+    const orgName = (document.getElementById("orgName")?.value || "").trim();
+    const email = (document.getElementById("email")?.value || "").trim();
+    const role = document.getElementById("role")?.value || "";
+    const companySize = document.getElementById("companySize")?.value || "";
+    const useCase = document.getElementById("useCase")?.value || "";
 
-async function callBackend() {
-  setStatus("Generating…", "");
-  generateBtn.disabled = true;
-  demoBtn.disabled = true;
-
-  const payload = {
-    // Backend currently supports these fields
-    task: "iso27001_policy",
-    tone: "audit",
-    format: format.value || "markdown",
-    text: buildUserContext()
-  };
-
-  try {
-    const res = await fetch("/api/generate", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload)
-    });
-
-    const data = await res.json().catch(() => ({}));
-
-    if (!res.ok) {
-      const msg = data?.error ? `${data.error}` : `Request failed (${res.status})`;
-      setStatus(`Backend error (${res.status}). ${msg}`, "error");
+    if (!isValidEmail(email)) {
+      setMsg("Please enter a valid email address.", "err");
       return;
     }
 
-    outputEl.value = data.output || "";
-    setStatus("Done. Review and adapt before approval.", "ok");
-  } catch (e) {
-    setStatus(`Network error. ${String(e?.message || e)}`, "error");
-  } finally {
-    generateBtn.disabled = false;
-    demoBtn.disabled = false;
-  }
-}
+    const payload = {
+      email,
+      orgName: orgName || null,
+      role,
+      companySize,
+      useCase,
+      page: location.href,
+      ts: new Date().toISOString(),
+    };
 
-function demoGenerate() {
-  // A short demo output so the UI feels alive even without backend.
-  const demo = `# Information Security Policy (Demo)
+    // lightweight local guard to avoid accidental repeat submits on refresh
+    try {
+      const prev = localStorage.getItem("reluguard_lead_ts");
+      if (prev) {
+        const ageMs = Date.now() - Number(prev);
+        if (ageMs < 30_000) {
+          setMsg("Already submitted — redirecting…", "ok");
+          location.href = "thanks.html";
+          return;
+        }
+      }
+    } catch {}
 
-## Policy
-This is a demo artefact to illustrate structure. Use “Generate audit-ready policy” for live output.
+    btn.disabled = true;
+    btn.textContent = "Submitting…";
+    setMsg("", null);
 
-## Assumptions
-- Demo mode does not use your backend or any API keys.
+    try {
+      const res = await fetch("/api/lead", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(payload),
+      });
 
-## Scope boundaries
-- This does not claim compliance.
+      if (!res.ok) {
+        let body = {};
+        try { body = await res.json(); } catch {}
+        throw new Error(body.error || "Submission failed. Please try again.");
+      }
 
-## Declared gaps
-- Organisation-specific decisions are required (roles, tooling, review cadence).
-
-## ISO/IEC 27001 Traceability Map
-| Policy Section | ISO intent area |
-|---|---|
-| Governance | Leadership |
-| Risk management | Planning |
-| Incident management | Operations |
-`;
-
-  outputEl.value = demo;
-  setStatus("Demo output loaded (no backend call).", "ok");
-}
-
-copyBtn.addEventListener("click", async () => {
-  const text = outputEl.value || "";
-  if (!text) return setStatus("Nothing to copy yet.", "error");
-  try {
-    await navigator.clipboard.writeText(text);
-    setStatus("Copied to clipboard.", "ok");
-  } catch {
-    setStatus("Copy failed (browser blocked clipboard).", "error");
-  }
-});
-
-downloadBtn.addEventListener("click", () => {
-  const text = outputEl.value || "";
-  if (!text) return setStatus("Nothing to download yet.", "error");
-  downloadText("reluguard-policy.md", text);
-});
-
-generateBtn.addEventListener("click", callBackend);
-demoBtn.addEventListener("click", demoGenerate);
-
-// Theme toggle (light/dark)
-function setTheme(theme) {
-  document.documentElement.setAttribute("data-theme", theme);
-  localStorage.setItem("reluguard_theme", theme);
-  themeToggle.textContent = theme === "light" ? "Theme: Light" : "Theme: Dark";
-}
-themeToggle.addEventListener("click", () => {
-  const current = document.documentElement.getAttribute("data-theme") || "dark";
-  setTheme(current === "dark" ? "light" : "dark");
-});
-
-// Initialise theme
-const savedTheme = localStorage.getItem("reluguard_theme");
-setTheme(savedTheme || "light");
-setStatus("", "");
+      try { localStorage.setItem("reluguard_lead_ts", String(Date.now())); } catch {}
+      setMsg("Request received — redirecting…", "ok");
+      setTimeout(() => (location.href = "thanks.html"), 500);
+    } catch (err) {
+      setMsg(err.message || "Something went wrong.", "err");
+      btn.disabled = false;
+      btn.textContent = "Request the template";
+    }
+  });
+})();
