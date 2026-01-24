@@ -2,148 +2,159 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>ReluGuard — ISO 27001 Audit-Ready Policy Generator</title>
-  <link rel="stylesheet" href="./styles.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ReluGuard — Request the AI Usage Policy Template</title>
+  <meta name="description" content="Request a practical, editable AI usage policy template your organisation can adopt. Clear rules, audit-friendly, zero fluff." />
+  <meta property="og:title" content="ReluGuard — Request the AI Usage Policy Template" />
+  <meta property="og:description" content="Practical, editable, audit-friendly. Request the template." />
+  <meta property="og:type" content="website" />
+  <link rel="stylesheet" href="styles.css" />
 </head>
-<body>
-  <header class="topbar">
-    <div class="brand">
-      <div class="logo">RG</div>
-      <div>
-        <div class="brandName">ReluGuard</div>
-        <div class="brandTag">ISO 27001 Audit-Ready Policy Generator</div>
-      </div>
-    </div>
 
-    <div class="topbarActions">
-      <button id="themeToggle" class="btn btn-ghost" type="button" aria-label="Toggle theme">
-        Theme
-      </button>
+<body>
+  <header class="top">
+    <div class="container nav">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <div class="brandText">
+          <div class="brandName">ReluGuard</div>
+          <div class="brandTag">Early access</div>
+        </div>
+      </div>
+
+      <nav class="navLinks">
+        <a class="pill" href="copilot-policy.html">What you get</a>
+        <span class="pill pillMuted" title="Coming next">Payments: coming soon</span>
+      </nav>
     </div>
   </header>
 
   <main class="container">
     <section class="hero">
-      <h1>ISO 27001 Audit-Ready Information Security Policy</h1>
-      <p class="subhead">MVP — generate a defensible policy with assumptions, gaps, and traceability.</p>
-      <p class="muted">This tool produces a review-ready policy artefact — not a compliance verdict.</p>
-    </section>
+      <div class="card heroLeft">
+        <div class="kicker">Practical governance. Zero fluff.</div>
+        <h1>Request an AI usage policy template your team can actually adopt.</h1>
+        <p class="lead">
+          A clean, editable template you can adapt fast — designed to reduce data leakage risk, clarify staff
+          rules, and stand up in real-world reviews.
+        </p>
 
-    <section class="grid">
-      <!-- 1) Context -->
-      <section class="card">
-        <div class="cardHeader">
-          <h2>1) Organisation context</h2>
-          <p class="muted">These inputs guide structure and scope. They do not declare compliance.</p>
-        </div>
-
-        <div class="form">
-          <label class="field">
-            <span class="label">Organisation type</span>
-            <input id="orgType" type="text" placeholder="e.g. fintech, SaaS, professional services" />
-          </label>
-
-          <div class="row">
-            <label class="field">
-              <span class="label">Organisation size</span>
-              <select id="orgSize">
-                <option value="">Select…</option>
-                <option>1–10</option>
-                <option>11–50</option>
-                <option>51–250</option>
-                <option>250+</option>
-              </select>
-            </label>
-
-            <label class="field">
-              <span class="label">Primary regulatory driver</span>
-              <input id="driver" type="text" value="ISO/IEC 27001 (fixed for v1)" disabled />
-            </label>
+        <div class="tri">
+          <div class="miniCard">
+            <div class="miniTitle">Clear rules</div>
+            <div class="miniText">DO / DON’T guidance normal humans will follow.</div>
           </div>
-
-          <label class="field">
-            <span class="label">Target compliance posture</span>
-            <select id="posture">
-              <option value="Minimum compliant">Minimum compliant</option>
-              <option value="Reasonable baseline" selected>Reasonable baseline</option>
-            </select>
-          </label>
-
-          <label class="field">
-            <span class="label">Anything unusual or out of scope? (optional)</span>
-            <textarea id="notes" rows="4" placeholder="e.g. heavy outsourcing, cloud-only, no on-prem"></textarea>
-          </label>
-
-          <div class="callout">
-            <strong>Tip:</strong> Avoid pasting confidential or customer data.
+          <div class="miniCard">
+            <div class="miniTitle">Editable</div>
+            <div class="miniText">Delivered in Word + PDF (so you can tailor quickly).</div>
+          </div>
+          <div class="miniCard">
+            <div class="miniTitle">Audit-friendly</div>
+            <div class="miniText">Built around accountability, classification, and oversight.</div>
           </div>
         </div>
-      </section>
 
-      <!-- 2) Output + Generate -->
-      <section class="card">
-        <div class="cardHeader">
-          <h2>2) Output you will receive</h2>
-        </div>
+        <div class="hr"></div>
 
-        <ul class="checklist">
-          <li>ISO 27001-aligned Information Security Policy</li>
-          <li>Explicit assumptions and scope boundaries</li>
-          <li>Declared gaps and organisation-specific decisions</li>
-          <li>ISO 27001 intent-level traceability</li>
-          <li>“How this was produced” audit note</li>
-        </ul>
-
-        <p class="muted small">This artefact is designed to be reviewed, adapted, and approved by a human.</p>
-
-        <div class="actions">
-          <button id="generateBtn" class="btn btn-primary" type="button">Generate audit-ready policy</button>
-          <button id="demoBtn" class="btn btn-secondary" type="button">Demo mode (no backend call)</button>
-        </div>
-
-        <p id="status" class="status" aria-live="polite"></p>
-        <p class="muted small">Live generation is enabled. Please avoid pasting confidential material.</p>
-
-        <details class="details">
-          <summary>Advanced</summary>
-          <div class="advanced">
-            <label class="field">
-              <span class="label">Output format</span>
-              <select id="format">
-                <option value="markdown" selected>Markdown</option>
-                <option value="plain">Plain text</option>
-              </select>
-            </label>
+        <div class="bullets">
+          <div class="bullet">
+            <span class="dot"></span>
+            <div>
+              <div class="bulletTitle">Best for</div>
+              <div class="bulletText">Any organisation that wants to control AI use without killing productivity.</div>
+            </div>
           </div>
-        </details>
-      </section>
-    </section>
 
-    <!-- 3) Output -->
-    <section class="card outputCard">
-      <div class="cardHeader outputHeader">
-        <div>
-          <h2>3) Generated artefact</h2>
-          <p class="muted">
-            This output is intentionally bounded to avoid over-claiming.
-            Assumptions, exclusions, and gaps are explicitly declared.
-          </p>
-        </div>
-        <div class="outputActions">
-          <button id="copyBtn" class="btn btn-ghost" type="button">Copy</button>
-          <button id="downloadBtn" class="btn btn-ghost" type="button">Download (.md)</button>
+          <div class="bullet">
+            <span class="dot"></span>
+            <div>
+              <div class="bulletTitle">Scope</div>
+              <div class="bulletText">Works for Copilot and general GenAI usage. Add your tools and risk posture in minutes.</div>
+            </div>
+          </div>
+
+          <div class="bullet">
+            <span class="dot"></span>
+            <div>
+              <div class="bulletTitle">What happens after you request</div>
+              <div class="bulletText">We log your request and you’ll be first to receive the initial version. Payments + instant download come next.</div>
+            </div>
+          </div>
         </div>
       </div>
 
-      <textarea id="output" class="output" rows="18" placeholder="Your generated policy will appear here…"></textarea>
+      <aside class="card heroRight">
+        <div class="formTitle">Request the template</div>
+        <div class="formSub">No payment yet. This is an early request list.</div>
 
-      <p class="fineprint">
-        ReluGuard supports drafting and decision-making. It does not certify compliance or replace professional judgement.
-      </p>
+        <form id="leadForm">
+          <div class="row">
+            <label>
+              <span>Organisation (optional)</span>
+              <input id="orgName" type="text" placeholder="e.g., Acme Ltd" autocomplete="organization" />
+            </label>
+
+            <label>
+              <span>Work email</span>
+              <input id="email" type="email" placeholder="you@company.com" autocomplete="email" required />
+            </label>
+          </div>
+
+          <div class="row">
+            <label>
+              <span>Role</span>
+              <select id="role">
+                <option>GRC / Compliance</option>
+                <option>Information Security</option>
+                <option>IT / Engineering</option>
+                <option>Operations</option>
+                <option>Executive / Founder</option>
+                <option>Other</option>
+              </select>
+            </label>
+
+            <label>
+              <span>Company size</span>
+              <select id="companySize">
+                <option>1-50</option>
+                <option>51-200</option>
+                <option>201-1000</option>
+                <option>1000+</option>
+              </select>
+            </label>
+          </div>
+
+          <label>
+            <span>What do you want first?</span>
+            <select id="useCase">
+              <option>AI usage policy (Copilot + general GenAI)</option>
+              <option>AI acceptable use (general)</option>
+              <option>Data handling & classification guidance</option>
+              <option>Incident response playbook</option>
+            </select>
+          </label>
+
+          <button id="submitBtn" type="submit">Request the template</button>
+
+          <div id="formMsg" class="formMsg" aria-live="polite"></div>
+
+          <div class="finePrint">
+            By requesting, you agree we can email you about this template. No spam. Payments will be added after we validate demand.
+          </div>
+        </form>
+      </aside>
     </section>
+
+    <footer class="footer">
+      <div>© <span id="year"></span> ReluGuard</div>
+      <div class="footerRight">
+        <a href="copilot-policy.html">What you get</a>
+        <span class="sep">•</span>
+        <a href="thanks.html" aria-label="Thanks page">Thanks</a>
+      </div>
+    </footer>
   </main>
 
-  <script src="./app.js"></script>
+  <script src="app.js" defer></script>
 </body>
 </html>
