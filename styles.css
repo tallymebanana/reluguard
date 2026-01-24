@@ -139,3 +139,16 @@ button:disabled{opacity:.6;cursor:not-allowed}
 .footerRight{display:flex;gap:10px;align-items:center}
 .sep{opacity:.55}
 .footerRight a:hover{text-decoration:underline}
+.buyBtn{
+  display:block;
+  text-align:center;
+  padding:12px 14px;
+  border-radius:12px;
+  border:1px solid rgba(37,99,235,.55);
+  background: linear-gradient(180deg, rgba(37,99,235,.20), rgba(37,99,235,.12));
+  font-weight:900;
+}
+.buyBtn:hover{
+  border-color: rgba(37,99,235,.75);
+  background: linear-gradient(180deg, rgba(37,99,235,.24), rgba(37,99,235,.14));
+}
