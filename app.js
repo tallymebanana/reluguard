@@ -1,6 +1,14 @@
 (function () {
+  // 🔧 Put your Stripe Payment Link here:
+  const STRIPE_PAYMENT_LINK = "https://buy.stripe.com/7sYbIU6Mu96A1oyeCWeUU00";
+
   const year = document.getElementById("year");
   if (year) year.textContent = String(new Date().getFullYear());
+
+  const buyBtn = document.getElementById("buyBtn");
+  if (buyBtn && STRIPE_PAYMENT_LINK && STRIPE_PAYMENT_LINK.startsWith("https://")) {
+    buyBtn.setAttribute("href", STRIPE_PAYMENT_LINK);
+  }
 
   const form = document.getElementById("leadForm");
   const msg = document.getElementById("formMsg");
@@ -45,7 +53,6 @@
       ts: new Date().toISOString(),
     };
 
-    // lightweight local guard to avoid accidental repeat submits on refresh
     try {
       const prev = localStorage.getItem("reluguard_lead_ts");
       if (prev) {
