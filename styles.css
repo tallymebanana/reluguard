@@ -152,3 +152,42 @@ button:disabled{opacity:.6;cursor:not-allowed}
   border-color: rgba(37,99,235,.75);
   background: linear-gradient(180deg, rgba(37,99,235,.24), rgba(37,99,235,.14));
 }
+.card h1 {
+  font-size: 34px;
+  margin-bottom: 6px;
+}
+
+.card .meta {
+  font-size: 13px;
+  color: var(--muted2);
+  margin-bottom: 18px;
+}
+
+.card h2 {
+  margin-top: 28px;
+  margin-bottom: 8px;
+  font-size: 20px;
+}
+
+.card h3 {
+  margin-top: 18px;
+  margin-bottom: 6px;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.card p,
+.card li {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text);
+}
+
+.card ul {
+  padding-left: 18px;
+  margin: 8px 0 14px;
+}
+
+.card li {
+  margin-bottom: 6px;
+}
