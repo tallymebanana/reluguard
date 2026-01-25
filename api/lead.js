@@ -39,7 +39,7 @@ export default async function handler(req, res) {
 
     // If env vars aren't set, don't fail the submission — just log.
     if (RESEND_API_KEY && TO) {
-      const subject = `ReluGuard lead: ${lead.email}${lead.orgName ? ` (${lead.orgName})` : ""}`;
+      const subject = `ReluGuard: ${lead.useCase || "Enquiry"} — ${lead.email}${lead.orgName ? ` (${lead.orgName})` : ""}`;
 
       const text =
 `New ReluGuard submission
