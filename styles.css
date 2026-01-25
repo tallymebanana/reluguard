@@ -206,3 +206,29 @@ button:disabled{opacity:.6;cursor:not-allowed}
   border-color: rgba(37,99,235,.75);
   background: linear-gradient(180deg, rgba(37,99,235,.22), rgba(37,99,235,.12));
 }
+/* === Conversion accent (single colour moment) === */
+.buyBtn{
+  color:#fff;
+  border-color: rgba(37,99,235,.75);
+  background: linear-gradient(135deg, var(--accent), #6366f1);
+  box-shadow: 0 16px 30px rgba(37,99,235,.22);
+}
+
+.buyBtn:hover{
+  border-color: rgba(37,99,235,.95);
+  background: linear-gradient(135deg, var(--accent2), #4f46e5);
+  box-shadow: 0 18px 34px rgba(37,99,235,.28);
+}
+
+/* Ownership line (quiet credibility) */
+.ownerLine{
+  margin: 10px 0 0;
+  font-size: 13px;
+  color: var(--muted2);
+}
+
+/* Optional: make the top-right CTA pill a touch stronger if you add it */
+.pillStrong{
+  color: var(--text);
+  border-color: rgba(37,99,235,.35);
+}
