@@ -27,7 +27,7 @@
 
       <nav class="navLinks">
         <a class="pill" href="copilot-policy.html">What you get</a>
-        <a class="pill pillStrong" href="#buy">Get the template</a>
+        <a class="pill" href="#question">Contact</a>
       </nav>
     </div>
   </header>
@@ -40,8 +40,8 @@
         <h1>Control AI use and reduce data leakage risk — without slowing teams down.</h1>
 
         <p class="lead">
-          A practical AI usage policy template designed for real adoption: clear rules for staff, built-in
-          accountability, and structure that stands up in reviews.
+          A practical AI usage policy template designed for real adoption: clear rules for staff,
+          built-in accountability, and structure that stands up in reviews.
         </p>
 
         <p class="ownerLine">
@@ -70,7 +70,9 @@
             <span class="dot"></span>
             <div>
               <div class="bulletTitle">Best for</div>
-              <div class="bulletText">Security, compliance, and risk teams who need AI control without killing productivity.</div>
+              <div class="bulletText">
+                Security, compliance, and risk teams who need AI control without killing productivity.
+              </div>
             </div>
           </div>
 
@@ -78,30 +80,36 @@
             <span class="dot"></span>
             <div>
               <div class="bulletTitle">Scope</div>
-              <div class="bulletText">Works for Copilot and general GenAI usage. Add your tools and risk posture in minutes.</div>
+              <div class="bulletText">
+                Works for Copilot and general GenAI usage. Add your tools and risk posture in minutes.
+              </div>
             </div>
           </div>
 
           <div class="bullet">
             <span class="dot"></span>
             <div>
-              <div class="bulletTitle">What happens after purchase</div>
-              <div class="bulletText">Secure checkout via Stripe. The editable template is emailed to you shortly after payment — no account required.</div>
+              <div class="bulletTitle">Delivery</div>
+              <div class="bulletText">
+                Secure checkout via Stripe. The editable template is emailed to you shortly after payment — no account required.
+              </div>
             </div>
           </div>
         </div>
 
-        <div class="microDisclaimer">
-          This template provides practical governance guidance and must be adapted to your organisation’s legal and regulatory context.
-        </div>
+        <!-- Integrated compliance note -->
+        <div class="hr"></div>
+        <p class="finePrint">
+          This template provides practical governance guidance and should be adapted to your organisation’s
+          legal and regulatory context.
+        </p>
       </div>
 
-      <!-- IMPORTANT: id="buy" so your top nav link works -->
+      <!-- Purchase column -->
       <aside class="card heroRight" id="buy">
         <div class="formTitle">Get the template</div>
         <div class="formSub">Answer 3 quick questions, then continue to secure checkout.</div>
 
-        <!-- IMPORTANT: id="buyJourney" must match app.js -->
         <form id="buyJourney">
           <div class="row">
             <label>
@@ -147,13 +155,13 @@
             </select>
           </label>
 
-          <!-- IMPORTANT: id + type must match app.js -->
           <button id="buyNowBtn" class="buyBtn" type="submit">
             Continue to secure checkout — €79
           </button>
 
           <div class="finePrint" style="margin-top:8px">
-            One-time purchase. No subscription. Checkout is hosted by Stripe. We’ll email the editable template to the address above.
+            One-time purchase. No subscription. Checkout is hosted by Stripe.
+            We’ll email the editable template to the address above.
           </div>
 
           <div id="buyMsg" class="formMsg" aria-live="polite"></div>
@@ -162,10 +170,10 @@
         <div class="hr"></div>
 
         <div class="formTitle" id="question" style="margin-top:0">Have a question?</div>
-        <div class="formSub">Invoice/PO, scope questions, or customisation — send a note and we’ll reply by email.</div>
-        <div class="hr"></div>
+        <div class="formSub">
+          Invoice/PO, scope questions, or customisation — send a note and we’ll reply by email.
+        </div>
 
-        <!-- IMPORTANT: id="questionForm" must match app.js -->
         <form id="questionForm">
           <label>
             <span>Email</span>
@@ -197,7 +205,6 @@
     </footer>
   </main>
 
-  <!-- IMPORTANT: must load app.js (same folder), and defer is correct -->
   <script src="app.js" defer></script>
 </body>
 </html>
