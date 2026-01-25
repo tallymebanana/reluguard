@@ -86,80 +86,9 @@
 
      <aside class="card heroRight">
   <div class="formTitle">Get the template</div>
-  <div class="formSub">Buy now, or request an invoice / ask a question before buying.</div>
+  <div class="formSub">Answer 3 quick questions, then continue to secure checkout.</div>
 
-  <!-- 🔥 Buy now -->
-  <div class="formTitle">Get the template</div>
-<div class="formSub">Enter your email, then continue to secure checkout.</div>
-
-<form id="buyJourney">
-  <div class="row">
-    <label>
-      <span>Organisation (optional)</span>
-      <input id="orgName" type="text" placeholder="e.g., Acme Ltd" autocomplete="organization" />
-    </label>
-
-    <label>
-      <span>Work email</span>
-      <input id="email" type="email" placeholder="you@company.com" autocomplete="email" required />
-    </label>
-  </div>
-
-  <button id="buyNowBtn" class="buyBtn" type="submit">
-    Continue to secure checkout — €79
-  </button>
-
-  <div class="finePrint" style="margin-top:8px">
-    Checkout is hosted by Stripe. We’ll email the template to the address above.
-  </div>
-
-  <div id="buyMsg" class="formMsg" aria-live="polite"></div>
-</form>
-
-<div class="hr"></div>
-
-<div class="formTitle" style="margin-top:0">Need invoice / PO, or have a question?</div>
-<div class="formSub">Send your details and we’ll reply by email.</div>
-
-<form id="leadForm">
-  <div class="row">
-    <label>
-      <span>Organisation (optional)</span>
-      <input id="orgName2" type="text" placeholder="e.g., Acme Ltd" autocomplete="organization" />
-    </label>
-
-    <label>
-      <span>Work email</span>
-      <input id="email2" type="email" placeholder="you@company.com" autocomplete="email" required />
-    </label>
-  </div>
-
-  <label>
-    <span>What do you need?</span>
-    <select id="useCase">
-      <option>Invoice / PO purchase</option>
-      <option>Question before buying</option>
-      <option>Customisation question</option>
-      <option>Something else</option>
-    </select>
-  </label>
-
-  <button id="submitBtn" type="submit">Send</button>
-
-  <div id="formMsg" class="formMsg" aria-live="polite"></div>
-
-  <div class="finePrint">
-    By submitting, you agree we can reply to your enquiry. No marketing list.
-  </div>
-</form>
-
-
-  <!-- Early request form stays -->
-<div class="formTitle" style="margin-top:0">Need invoice / PO, or have a question?</div>
-<div class="formSub">Send your details and we’ll reply by email.</div>
-
-
-  <form id="leadForm">
+  <form id="buyJourney">
     <div class="row">
       <label>
         <span>Organisation (optional)</span>
@@ -172,50 +101,75 @@
       </label>
     </div>
 
-    <div class="row">
-      <label>
-        <span>Role</span>
-        <select id="role">
-          <option>GRC / Compliance</option>
-          <option>Information Security</option>
-          <option>IT / Engineering</option>
-          <option>Operations</option>
-          <option>Executive / Founder</option>
-          <option>Other</option>
-        </select>
-      </label>
-
-      <label>
-        <span>Company size</span>
-        <select id="companySize">
-          <option>1-50</option>
-          <option>51-200</option>
-          <option>201-1000</option>
-          <option>1000+</option>
-        </select>
-      </label>
-    </div>
-
     <label>
-      <span>What do you need?</span>
-      <select id="useCase">
-      <option>Invoice / PO purchase</option>
-      <option>Question before buying</option>
-      <option>Customisation question</option>
-      <option>Something else</option>
-
+      <span>Risk appetite</span>
+      <select id="riskAppetite" required>
+        <option value="" selected disabled>Select…</option>
+        <option>Low (strict controls)</option>
+        <option>Balanced</option>
+        <option>High (flexible / enablement-first)</option>
       </select>
     </label>
 
-    <button id="submitBtn" type="submit">Request the template</button>
+    <label>
+      <span>Primary AI tools in scope</span>
+      <select id="aiTools" required>
+        <option value="" selected disabled>Select…</option>
+        <option>Microsoft Copilot (M365)</option>
+        <option>Copilot + ChatGPT</option>
+        <option>Mixed tools (staff choose)</option>
+        <option>Other / not sure yet</option>
+      </select>
+    </label>
 
-    <div id="formMsg" class="formMsg" aria-live="polite"></div>
+    <label>
+      <span>Data sensitivity focus</span>
+      <select id="dataSensitivity" required>
+        <option value="" selected disabled>Select…</option>
+        <option>Customer & financial data</option>
+        <option>Personal data (GDPR)</option>
+        <option>Commercially sensitive / IP</option>
+        <option>All of the above</option>
+      </select>
+    </label>
+
+    <button id="buyNowBtn" class="buyBtn" type="submit">
+      Continue to secure checkout — €79
+    </button>
+
+    <div class="finePrint" style="margin-top:8px">
+      Checkout is hosted by Stripe. We’ll email the editable template to the address above.
+    </div>
+
+    <div id="buyMsg" class="formMsg" aria-live="polite"></div>
+  </form>
+
+  <div class="hr"></div>
+
+  <div class="formTitle" style="margin-top:0">Have a question?</div>
+  <div class="formSub">Send a note and we’ll reply by email.</div>
+
+  <form id="questionForm">
+    <label>
+      <span>Email</span>
+      <input id="qEmail" type="email" placeholder="you@company.com" autocomplete="email" required />
+    </label>
+
+    <label>
+      <span>Message</span>
+      <input id="qMsg" type="text" placeholder="Invoice/PO, scope questions, customisation, etc." required />
+    </label>
+
+    <button id="qBtn" type="submit">Send</button>
+
+    <div id="qFormMsg" class="formMsg" aria-live="polite"></div>
 
     <div class="finePrint">
       By submitting, you agree we can reply to your enquiry. No marketing list.
     </div>
   </form>
 </aside>
+
     </section>
 
     <footer class="footer">
