@@ -89,14 +89,70 @@
   <div class="formSub">Buy now, or request an invoice / ask a question before buying.</div>
 
   <!-- 🔥 Buy now -->
-  <a id="buyBtn" class="buyBtn" href="#" target="_blank" rel="noopener">
-    Buy now — €99
-  </a>
-  <div class="finePrint" style="margin-top:8px">
-    Instant checkout via Stripe. You’ll receive a confirmation email right away.
+  <div class="formTitle">Get the template</div>
+<div class="formSub">Enter your email, then continue to secure checkout.</div>
+
+<form id="buyJourney">
+  <div class="row">
+    <label>
+      <span>Organisation (optional)</span>
+      <input id="orgName" type="text" placeholder="e.g., Acme Ltd" autocomplete="organization" />
+    </label>
+
+    <label>
+      <span>Work email</span>
+      <input id="email" type="email" placeholder="you@company.com" autocomplete="email" required />
+    </label>
   </div>
 
-  <div class="hr"></div>
+  <button id="buyNowBtn" class="buyBtn" type="submit">
+    Continue to secure checkout — €79
+  </button>
+
+  <div class="finePrint" style="margin-top:8px">
+    Checkout is hosted by Stripe. We’ll email the template to the address above.
+  </div>
+
+  <div id="buyMsg" class="formMsg" aria-live="polite"></div>
+</form>
+
+<div class="hr"></div>
+
+<div class="formTitle" style="margin-top:0">Need invoice / PO, or have a question?</div>
+<div class="formSub">Send your details and we’ll reply by email.</div>
+
+<form id="leadForm">
+  <div class="row">
+    <label>
+      <span>Organisation (optional)</span>
+      <input id="orgName2" type="text" placeholder="e.g., Acme Ltd" autocomplete="organization" />
+    </label>
+
+    <label>
+      <span>Work email</span>
+      <input id="email2" type="email" placeholder="you@company.com" autocomplete="email" required />
+    </label>
+  </div>
+
+  <label>
+    <span>What do you need?</span>
+    <select id="useCase">
+      <option>Invoice / PO purchase</option>
+      <option>Question before buying</option>
+      <option>Customisation question</option>
+      <option>Something else</option>
+    </select>
+  </label>
+
+  <button id="submitBtn" type="submit">Send</button>
+
+  <div id="formMsg" class="formMsg" aria-live="polite"></div>
+
+  <div class="finePrint">
+    By submitting, you agree we can reply to your enquiry. No marketing list.
+  </div>
+</form>
+
 
   <!-- Early request form stays -->
 <div class="formTitle" style="margin-top:0">Need invoice / PO, or have a question?</div>
