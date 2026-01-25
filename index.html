@@ -111,4 +111,92 @@
 
             <label>
               <span>Work email</span>
+              <input id="email" type="email" placeholder="you@company.com" autocomplete="email" required />
+            </label>
+          </div>
 
+          <label>
+            <span>Risk appetite</span>
+            <select id="riskAppetite" required>
+              <option value="" selected disabled>Select…</option>
+              <option>Low (strict controls)</option>
+              <option>Balanced</option>
+              <option>High (flexible / enablement-first)</option>
+            </select>
+          </label>
+
+          <label>
+            <span>Primary AI tools in scope</span>
+            <select id="aiTools" required>
+              <option value="" selected disabled>Select…</option>
+              <option>Microsoft Copilot (M365)</option>
+              <option>Copilot + ChatGPT</option>
+              <option>Mixed tools (staff choose)</option>
+              <option>Other / not sure yet</option>
+            </select>
+          </label>
+
+          <label>
+            <span>Data sensitivity focus</span>
+            <select id="dataSensitivity" required>
+              <option value="" selected disabled>Select…</option>
+              <option>Customer & financial data</option>
+              <option>Personal data (GDPR)</option>
+              <option>Commercially sensitive / IP</option>
+              <option>All of the above</option>
+            </select>
+          </label>
+
+          <!-- IMPORTANT: id + type must match app.js -->
+          <button id="buyNowBtn" class="buyBtn" type="submit">
+            Continue to secure checkout — €79
+          </button>
+
+          <div class="finePrint" style="margin-top:8px">
+            One-time purchase. No subscription. Checkout is hosted by Stripe. We’ll email the editable template to the address above.
+          </div>
+
+          <div id="buyMsg" class="formMsg" aria-live="polite"></div>
+        </form>
+
+        <div class="hr"></div>
+
+        <div class="formTitle" style="margin-top:0">Have a question?</div>
+        <div class="formSub">Invoice/PO, scope questions, or customisation — send a note and we’ll reply by email.</div>
+
+        <!-- IMPORTANT: id="questionForm" must match app.js -->
+        <form id="questionForm">
+          <label>
+            <span>Email</span>
+            <input id="qEmail" type="email" placeholder="you@company.com" autocomplete="email" required />
+          </label>
+
+          <label>
+            <span>Message</span>
+            <input id="qMsg" type="text" placeholder="Invoice/PO, scope questions, customisation, etc." required />
+          </label>
+
+          <button id="qBtn" type="submit">Send</button>
+
+          <div id="qFormMsg" class="formMsg" aria-live="polite"></div>
+
+          <div class="finePrint">
+            By submitting, you agree we can reply to your enquiry. No marketing list.
+          </div>
+        </form>
+      </aside>
+    </section>
+
+    <footer class="footer">
+      <div>© <span id="year"></span> ReluGuard</div>
+      <div class="footerRight">
+        <a href="copilot-policy.html">What you get</a>
+        <a href="privacy.html">Privacy Policy</a>
+      </div>
+    </footer>
+  </main>
+
+  <!-- IMPORTANT: must load app.js (same folder), and defer is correct -->
+  <script src="app.js" defer></script>
+</body>
+</html>
