@@ -87,6 +87,7 @@ function init() {
       await postLead({
         email,
         orgName: org || null,
+        website: (document.getElementById("buyJourney")?.querySelector('input[name="website"]')?.value || "").trim(),
         useCase,
         page: location.href,
         ts: new Date().toISOString(),
@@ -126,6 +127,7 @@ function init() {
         email,
         orgName: null,
         useCase: `Question | ${message}`,
+        website: (document.getElementById("buyJourney")?.querySelector('input[name="website"]')?.value || "").trim(),
         page: location.href,
         ts: new Date().toISOString(),
       });
