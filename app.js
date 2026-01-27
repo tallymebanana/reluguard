@@ -127,7 +127,7 @@ function init() {
         email,
         orgName: null,
         useCase: `Question | ${message}`,
-        website: (document.getElementById("buyJourney")?.querySelector('input[name="website"]')?.value || "").trim(),
+        website: (document.getElementById("questionForm")?.querySelector('input[name="website"]')?.value || "").trim(),
         page: location.href,
         ts: new Date().toISOString(),
       });
