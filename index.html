@@ -116,6 +116,10 @@
               <span>Organisation (optional)</span>
               <input id="orgName" type="text" placeholder="e.g., Acme Ltd" autocomplete="organization" />
             </label>
+          <!-- Honeypot (bots fill this). Humans never see it. -->
+          <div style="position:absolute; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden;">
+          <label>Website <input type="text" name="website" autocomplete="off" tabindex="-1"></label>
+          </div>
 
             <label>
               <span>Work email</span>
@@ -179,7 +183,10 @@
             <span>Email</span>
             <input id="qEmail" type="email" placeholder="you@company.com" autocomplete="email" required />
           </label>
-
+          <!-- Honeypot (bots fill this). Humans never see it. -->
+          <div style="position:absolute; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden;">
+          <label>Website <input type="text" name="website" autocomplete="off" tabindex="-1"></label>
+          </div>
           <label>
             <span>Message</span>
             <input id="qMsg" type="text" placeholder="Invoice/PO, scope questions, customisation, etc." required />
