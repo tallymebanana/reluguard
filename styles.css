@@ -139,73 +139,23 @@ button:disabled{opacity:.6;cursor:not-allowed}
 .footerRight{display:flex;gap:10px;align-items:center}
 .sep{opacity:.55}
 .footerRight a:hover{text-decoration:underline}
+
 .buyBtn{
   display:block;
   text-align:center;
   padding:12px 14px;
   border-radius:12px;
-  border:1px solid rgba(37,99,235,.55);
-  background: linear-gradient(180deg, rgba(37,99,235,.20), rgba(37,99,235,.12));
   font-weight:900;
-}
-.buyBtn:hover{
-  border-color: rgba(37,99,235,.75);
-  background: linear-gradient(180deg, rgba(37,99,235,.24), rgba(37,99,235,.14));
-}
-.card h1 {
-  font-size: 34px;
-  margin-bottom: 6px;
-}
-
-.card .meta {
-  font-size: 13px;
-  color: var(--muted2);
-  margin-bottom: 18px;
-}
-
-.card h2 {
-  margin-top: 28px;
-  margin-bottom: 8px;
-  font-size: 20px;
-}
-
-.card h3 {
-  margin-top: 18px;
-  margin-bottom: 6px;
-  font-size: 15px;
-  font-weight: 700;
-}
-
-.card p,
-.card li {
-  font-size: 14px;
-  line-height: 1.6;
-  color: var(--text);
-}
-
-.card ul {
-  padding-left: 18px;
-  margin: 8px 0 14px;
-}
-
-.card li {
-  margin-bottom: 6px;
-}
-.buyBtn {
-  display: block;
-  text-align: center;
-  padding: 12px 14px;
-  border-radius: 12px;
-  font-weight: 900;
-  border: 1px solid rgba(37,99,235,.55);
+  border:1px solid rgba(37,99,235,.55);
   background: linear-gradient(180deg, rgba(37,99,235,.18), rgba(37,99,235,.10));
   box-shadow: 0 10px 20px rgba(37,99,235,.10);
 }
 
-.buyBtn:hover {
+.buyBtn:hover{
   border-color: rgba(37,99,235,.75);
   background: linear-gradient(180deg, rgba(37,99,235,.22), rgba(37,99,235,.12));
 }
+
 /* === Conversion accent (single colour moment) === */
 .buyBtn{
   color:#fff;
@@ -231,4 +181,37 @@ button:disabled{opacity:.6;cursor:not-allowed}
 .pillStrong{
   color: var(--text);
   border-color: rgba(37,99,235,.35);
+}
+
+/* ============================= */
+/* ✅ MOBILE HEADER FIX (NEW)    */
+/* ============================= */
+@media (max-width: 480px) {
+  .nav{
+    flex-wrap: wrap;
+    row-gap: 10px;
+  }
+
+  .brand{
+    width: 100%;
+  }
+
+  .brandText{
+    flex-wrap: wrap;
+  }
+
+  .brandTag{
+    margin-top: 6px;
+    max-width: 100%;
+  }
+
+  .navLinks{
+    width: 100%;
+    justify-content: flex-end;
+    gap: 8px;
+  }
+
+  .pill{
+    white-space: normal;
+  }
 }
