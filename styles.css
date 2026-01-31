@@ -140,22 +140,6 @@ button:disabled{opacity:.6;cursor:not-allowed}
 .sep{opacity:.55}
 .footerRight a:hover{text-decoration:underline}
 
-.buyBtn{
-  display:block;
-  text-align:center;
-  padding:12px 14px;
-  border-radius:12px;
-  font-weight:900;
-  border:1px solid rgba(37,99,235,.55);
-  background: linear-gradient(180deg, rgba(37,99,235,.18), rgba(37,99,235,.10));
-  box-shadow: 0 10px 20px rgba(37,99,235,.10);
-}
-
-.buyBtn:hover{
-  border-color: rgba(37,99,235,.75);
-  background: linear-gradient(180deg, rgba(37,99,235,.22), rgba(37,99,235,.12));
-}
-
 /* === Conversion accent (single colour moment) === */
 .buyBtn{
   color:#fff;
