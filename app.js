@@ -1,6 +1,6 @@
 function init() {
   // 🔧 Put your Stripe Payment Link here (must start with https://)
-  const STRIPE_PAYMENT_LINK = "https://buy.stripe.com/7sYbIU6Mu96A1oyeCWeUU00";
+  const STRIPE_PAYMENT_LINK = "https://buy.stripe.com/dRm7sE8UC0A4d7g1QaeUU01";
 
   // ---------- helpers ----------
   function setMsg(el, text, type) {
