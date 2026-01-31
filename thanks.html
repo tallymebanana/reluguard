@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <title>ReluGuard — Thanks</title>
-  <meta name="description" content="Thanks — your request has been received. If you purchased, check your email for delivery shortly after payment." />
+  <meta name="description" content="Thanks — your request has been received. If you purchased, your policy will be delivered by email within 1 business day." />
   <link rel="stylesheet" href="styles.css" />
 </head>
 
@@ -37,7 +37,7 @@
       </p>
 
       <p id="sublead" class="finePrint" style="margin-top: 6px;">
-        If you completed checkout, delivery is by email shortly after payment.
+        If you completed checkout, delivery is by email within 1 business day.
       </p>
 
       <div class="hr"></div>
@@ -48,7 +48,7 @@
           <div>
             <div class="bulletTitle">If you purchased</div>
             <div class="bulletText">
-              Check your inbox for the email delivery (and your spam/junk folder, just in case). It’s sent to the address you used at checkout.
+              You’ll receive the policy template by email within <strong>1 business day</strong>, sent to the address used at checkout.
             </div>
           </div>
         </div>
@@ -58,7 +58,7 @@
           <div>
             <div class="bulletTitle">If you don’t receive it</div>
             <div class="bulletText">
-              Send a note via the contact form on the home page and include your checkout email + organisation name. We’ll sort it quickly.
+              Check your spam or junk folder. If it’s still not there after 1 business day, contact us via the home page and include your checkout email and approximate time of purchase. We’ll resend it promptly.
             </div>
           </div>
         </div>
@@ -68,7 +68,7 @@
           <div>
             <div class="bulletTitle">What you get</div>
             <div class="bulletText">
-              Want the full detail list? See <strong>What you get</strong> for contents and scope.
+              Want the full contents and scope? See <a href="copilot-policy.html"><strong>What you get</strong></a>.
             </div>
           </div>
         </div>
@@ -89,10 +89,10 @@
   </main>
 
   <script>
-    // We support a few ways to land here:
-    // - Direct visit (neutral)
-    // - Stripe success URL can append ?paid=1 (simple)
-    // - or you can append ?status=paid (also supported)
+    // Supports:
+    // - /thanks.html
+    // - /thanks.html?paid=1
+    // - /thanks.html?status=paid
 
     const params = new URLSearchParams(location.search);
     const paid = params.get("paid") === "1" || params.get("status") === "paid";
@@ -105,18 +105,17 @@
     if (paid) {
       if (kicker) kicker.textContent = "Payment confirmed ✅";
       if (title) title.textContent = "You’re all set.";
-      if (lead) lead.textContent = "Thanks — your purchase is confirmed. You’ll receive the template by email shortly after payment.";
-      if (sublead) sublead.textContent = "If it doesn’t arrive within a little while, check spam/junk, then contact us and we’ll resend.";
+      if (lead) lead.textContent =
+        "Thanks — your purchase is confirmed. Your AI usage policy template will be delivered by email within 1 business day.";
+      if (sublead) sublead.textContent =
+        "If it hasn’t arrived after 1 business day, check spam/junk and contact us — we’ll resend it promptly.";
     } else {
-      // Neutral default (works for contact submissions too)
       if (kicker) kicker.textContent = "Thanks ✅";
       if (title) title.textContent = "Message received.";
       if (lead) lead.textContent = "We’ll reply by email as soon as possible.";
-      if (sublead) sublead.textContent = "If you completed checkout, delivery is by email shortly after payment.";
+      if (sublead) sublead.textContent =
+        "If you completed checkout, delivery is by email within 1 business day.";
     }
-
-    // Make #question anchor work from this page
-    // (Add id="question" to the question section on index.html if you want this.)
   </script>
 </body>
 </html>
