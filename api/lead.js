@@ -4,7 +4,7 @@
 // - Payload size guard
 // - Input validation + length caps
 // - CRLF sanitisation for email subject
-// - Optional honeypot support (field: "website")
+// - Honeypot support (field: "website")
 
 export default async function handler(req, res) {
   const json = (status, body) => {
@@ -15,9 +15,29 @@ export default async function handler(req, res) {
   const clamp = (v, n) => (v == null ? "" : String(v).trim().slice(0, n));
   const oneLine = (v, n) => clamp(v, n).replace(/[\r\n]/g, " ");
 
+  // Safely read an object of answers and clamp each value
+  const clampObj = (obj, limits = {}) => {
+    const out = {};
+    if (!obj || typeof obj !== "object") return out;
+    for (const [k, v] of Object.entries(obj)) {
+      // Only allow simple scalar values
+      const key = clamp(k, 60);
+      if (!key) continue;
+      const limit = Number(limits[key] || 200);
+      out[key] = clamp(v, limit) || "";
+    }
+    return out;
+  };
+
+  // Convert answers object into readable lines for email
+  const answersToText = (answers) => {
+    const entries = Object.entries(answers || {}).filter(([, v]) => String(v || "").trim());
+    if (!entries.length) return "-";
+    return entries.map(([k, v]) => `${k}: ${v}`).join("\n");
+  };
+
   try {
     if (req.method === "OPTIONS") {
-      // If you ever add CORS, handle preflight properly. Otherwise this is harmless.
       res.status(204).end();
       return;
     }
@@ -28,7 +48,6 @@ export default async function handler(req, res) {
     const contentLen = Number(req.headers["content-length"] || 0);
     if (contentLen && contentLen > 20_000) return json(413, { error: "Payload too large" });
 
-    // Vercel usually parses JSON, but keep this safe.
     let body = req.body || {};
     if (typeof body === "string") {
       try {
@@ -48,7 +67,6 @@ export default async function handler(req, res) {
     }
 
     // ✅ Best-effort rate limit (per instance)
-    // Stops casual spam bursts. For stronger protection, add Upstash/Redis later.
     globalThis.__RG_RL__ ||= new Map();
 
     const ip =
@@ -73,19 +91,28 @@ export default async function handler(req, res) {
 
     if (entry.count > maxReq) return json(429, { error: "Too many requests" });
 
+    // NEW: accept structured answers (optional)
+    const answers = clampObj(body.answers, {
+      riskAppetite: 120,
+      aiTools: 200,
+      dataSensitivity: 200,
+      regEnvironment: 160,
+      aiAccessModel: 220,
+    });
+
     const lead = {
       email,
       orgName: clamp(body.orgName, 200),
       role: clamp(body.role, 200),
       companySize: clamp(body.companySize, 100),
       useCase: clamp(body.useCase, 1200),
+      answers,
       page: clamp(body.page, 400),
       ts: clamp(body.ts, 60) || new Date().toISOString(),
       ip,
       ua: clamp(req.headers["user-agent"], 300),
     };
 
-    // ✅ You *are* logging PII here — keep only if intentional.
     console.log("[RELUGUARD_LEAD]", lead);
 
     const RESEND_API_KEY = process.env.RESEND_API_KEY;
@@ -93,7 +120,6 @@ export default async function handler(req, res) {
     const FROM = process.env.LEAD_NOTIFY_FROM || "onboarding@resend.dev";
 
     if (!RESEND_API_KEY || !TO) {
-      // Still accept the lead (you logged it), but make it visible
       console.warn("[RELUGUARD_LEAD] Missing RESEND_API_KEY or LEAD_NOTIFY_TO");
       return json(200, { ok: true });
     }
@@ -111,6 +137,10 @@ Org: ${lead.orgName || "-"}
 Role: ${lead.role || "-"}
 Company size: ${lead.companySize || "-"}
 Use case: ${lead.useCase || "-"}
+
+Policy tailoring answers:
+${answersToText(lead.answers)}
+
 Page: ${lead.page || "-"}
 Time: ${lead.ts}
 IP: ${lead.ip || "-"}
@@ -133,7 +163,6 @@ UA: ${lead.ua || "-"}`;
     if (!r.ok) {
       const errText = await r.text().catch(() => "");
       console.warn("[RELUGUARD_LEAD_EMAIL_FAILED]", r.status, errText.slice(0, 800));
-      // Don't expose provider errors to the user
       return json(200, { ok: true });
     }
 
@@ -143,4 +172,3 @@ UA: ${lead.ua || "-"}`;
     return json(400, { error: "Bad request" });
   }
 }
-
