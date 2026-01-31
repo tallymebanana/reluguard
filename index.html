@@ -159,29 +159,10 @@
             </label>
           </div>
 
-          <label>
-            <span>Risk appetite</span>
-            <select id="riskAppetite" required>
-              <option value="" selected disabled>Select…</option>
-              <option>Low (strict controls)</option>
-              <option>Balanced</option>
-              <option>High (flexible / enablement-first)</option>
-            </select>
-          </label>
-
-          <label>
-            <span>Primary AI tools in scope</span>
-            <select id="aiTools" required>
-              <option value="" selected disabled>Select…</option>
-              <option>Microsoft Copilot (M365)</option>
-              <option>Copilot + ChatGPT</option>
-              <option>Mixed tools (staff choose)</option>
-              <option>Other / not sure yet</option>
-            </select>
-          </label>
+          
 <label>
   <span>Risk appetite</span>
-  <select id="riskAppetite" required>
+  <select id="riskAppetite">
     <option value="" selected disabled>Select…</option>
     <option>Low (strict controls)</option>
     <option>Balanced</option>
@@ -191,7 +172,7 @@
 
 <label>
   <span>Primary AI tools in scope</span>
-  <select id="aiTools" required>
+  <select id="aiTools">
     <option value="" selected disabled>Select…</option>
     <option>Microsoft Copilot (M365)</option>
     <option>Copilot + ChatGPT</option>
@@ -202,7 +183,7 @@
 
 <label>
   <span>Data sensitivity focus</span>
-  <select id="dataSensitivity" required>
+  <select id="dataSensitivity">
     <option value="" selected disabled>Select…</option>
     <option>Customer &amp; financial data</option>
     <option>Personal data (GDPR)</option>
@@ -214,7 +195,7 @@
 <!-- NEW (required) -->
 <label>
   <span>Primary regulatory environment</span>
-  <select id="regEnvironment" required>
+  <select id="regEnvironment">
     <option value="" selected disabled>Select…</option>
     <option>Financial services / regulated</option>
     <option>Public sector</option>
@@ -228,7 +209,7 @@
 <!-- NEW (required) -->
 <label>
   <span>AI access model to cover in the policy</span>
-  <select id="aiAccessModel" required>
+  <select id="aiAccessModel">
     <option value="" selected disabled>Select…</option>
     <option>Approved enterprise AI tools only</option>
     <option>Approved tools + limited public AI (non-sensitive only)</option>
@@ -239,7 +220,7 @@
 
           <label>
             <span>Data sensitivity focus</span>
-            <select id="dataSensitivity" required>
+            <select id="dataSensitivity">
               <option value="" selected disabled>Select…</option>
               <option>Customer & financial data</option>
               <option>Personal data (GDPR)</option>
