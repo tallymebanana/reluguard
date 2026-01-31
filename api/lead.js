@@ -113,24 +113,24 @@ export default async function handler(req, res) {
       ua: clamp(req.headers["user-agent"], 300),
     };
 
-    console.log("[RELUGUARD_LEAD]", lead);
+    console.log("[PolicySonic_LEAD]", lead);
 
     const RESEND_API_KEY = process.env.RESEND_API_KEY;
     const TO = process.env.LEAD_NOTIFY_TO;
     const FROM = process.env.LEAD_NOTIFY_FROM || "onboarding@resend.dev";
 
     if (!RESEND_API_KEY || !TO) {
-      console.warn("[RELUGUARD_LEAD] Missing RESEND_API_KEY or LEAD_NOTIFY_TO");
+      console.warn("[PolicySonic_LEAD] Missing RESEND_API_KEY or LEAD_NOTIFY_TO");
       return json(200, { ok: true });
     }
 
     const subject = oneLine(
-      `ReluGuard lead — ${lead.email}${lead.orgName ? ` (${lead.orgName})` : ""}`,
+      `PolicySonic lead — ${lead.email}${lead.orgName ? ` (${lead.orgName})` : ""}`,
       140
     );
 
     const text =
-`New ReluGuard submission
+`New PolicySonic submission
 
 Email: ${lead.email}
 Org: ${lead.orgName || "-"}
@@ -162,13 +162,13 @@ UA: ${lead.ua || "-"}`;
 
     if (!r.ok) {
       const errText = await r.text().catch(() => "");
-      console.warn("[RELUGUARD_LEAD_EMAIL_FAILED]", r.status, errText.slice(0, 800));
+      console.warn("[PolicySonic_LEAD_EMAIL_FAILED]", r.status, errText.slice(0, 800));
       return json(200, { ok: true });
     }
 
     return json(200, { ok: true });
   } catch (e) {
-    console.warn("[RELUGUARD_LEAD_ERROR]", e?.message || e);
+    console.warn("[PolicySonic_LEAD_ERROR]", e?.message || e);
     return json(400, { error: "Bad request" });
   }
 }
