@@ -1,3 +1,10 @@
+// app.js (FULL NEW) — PolicySonic
+// ✅ Only email is required
+// ✅ All selects optional
+// ✅ Honeypot ("website") is silently dropped (no logging, no redirect)
+// ✅ Sends both a readable summary (useCase) + structured answers (answers)
+// ✅ Redirects to Stripe Payment Link with prefilled_email
+
 function init() {
   // 🔧 Put your Stripe Payment Link here (must start with https://)
   const STRIPE_PAYMENT_LINK = "https://buy.stripe.com/dRm7sE8UC0A4d7g1QaeUU01";
@@ -71,11 +78,12 @@ function init() {
     buyForm.addEventListener("submit", async (e) => {
       e.preventDefault();
 
-      // Honeypot (bots): if filled, DROP silently (or show generic message)
+      // Honeypot (bots): if filled, DROP silently (no logging, no redirect)
       const honeypot = readHoneypot(buyForm);
       if (honeypot) {
-        // Drop. No redirect. No logging.
-        setMsg(buyMsg, "Could not continue. Please try again.", "err");
+        // Pretend success to avoid bot retries
+        setMsg(buyMsg, "Opening secure checkout…", "ok");
+        try { buyForm.reset(); } catch {}
         return;
       }
 
@@ -83,12 +91,10 @@ function init() {
         orgName: pickValue("orgName"),
         email: pickValue("email"),
 
-        // Existing selects (now optional)
+        // Optional selects
         riskAppetite: pickValue("riskAppetite"),
         aiTools: pickValue("aiTools"),
         dataSensitivity: pickValue("dataSensitivity"),
-
-        // New selects (also optional unless you choose otherwise)
         regEnvironment: pickValue("regEnvironment"),
         aiAccessModel: pickValue("aiAccessModel"),
       };
@@ -112,7 +118,7 @@ function init() {
       }
       setMsg(buyMsg, "", null);
 
-      // Build a summary that will definitely appear in your email (via useCase)
+      // Build a readable summary that will appear in your lead email
       const summary = buildSummary(fields);
 
       // Log purchase intent (best-effort)
@@ -121,19 +127,19 @@ function init() {
         email: fields.email,
         orgName: fields.orgName || null,
 
-        // Important: keep honeypot field name for backend consistency (always empty here)
+        // Honeypot field name for backend consistency (empty here)
         website: "",
 
-        // Keep current behaviour: pack answers into useCase string so you see them in email
+        // Keep readable summary
         useCase: `Purchase intent | ${summary}`,
 
-        // Also send structured fields for future template automation / better emails
+        // Structured answers for future automation
         answers: {
-          riskAppetite: fields.riskAppetite || null,
-          aiTools: fields.aiTools || null,
-          dataSensitivity: fields.dataSensitivity || null,
-          regEnvironment: fields.regEnvironment || null,
-          aiAccessModel: fields.aiAccessModel || null,
+          riskAppetite: fields.riskAppetite || "",
+          aiTools: fields.aiTools || "",
+          dataSensitivity: fields.dataSensitivity || "",
+          regEnvironment: fields.regEnvironment || "",
+          aiAccessModel: fields.aiAccessModel || "",
         },
 
         page: location.href,
@@ -156,10 +162,11 @@ function init() {
     qForm.addEventListener("submit", async (e) => {
       e.preventDefault();
 
-      // Honeypot (bots): drop
+      // Honeypot (bots): drop silently
       const honeypot = readHoneypot(qForm);
       if (honeypot) {
-        setMsg(qFormMsg, "Could not send. Please try again.", "err");
+        setMsg(qFormMsg, "Sent — we’ll reply by email.", "ok");
+        try { qForm.reset(); } catch {}
         return;
       }
 
@@ -188,7 +195,7 @@ function init() {
 
       if (ok) {
         setMsg(qFormMsg, "Sent — we’ll reply by email.", "ok");
-        qForm.reset();
+        try { qForm.reset(); } catch {}
       } else {
         setMsg(qFormMsg, "Could not send. Please try again.", "err");
       }
