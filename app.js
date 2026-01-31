@@ -23,6 +23,27 @@ function init() {
     return u.toString();
   }
 
+  function readHoneypot(formEl) {
+    return (formEl?.querySelector('input[name="website"]')?.value || "").trim();
+  }
+
+  function pickValue(id) {
+    return (document.getElementById(id)?.value || "").trim();
+  }
+
+  function buildSummary(fields) {
+    // Only include non-empty values in the summary (keeps email readable)
+    const parts = [];
+    if (fields.orgName) parts.push(`Org: ${fields.orgName}`);
+    if (fields.riskAppetite) parts.push(`Risk: ${fields.riskAppetite}`);
+    if (fields.aiTools) parts.push(`Tools: ${fields.aiTools}`);
+    if (fields.dataSensitivity) parts.push(`Data: ${fields.dataSensitivity}`);
+    if (fields.regEnvironment) parts.push(`Reg: ${fields.regEnvironment}`);
+    if (fields.aiAccessModel) parts.push(`Access model: ${fields.aiAccessModel}`);
+
+    return parts.length ? parts.join(" | ") : "(no extra answers provided)";
+  }
+
   async function postLead(payload) {
     // Best-effort: do not block purchase if logging fails
     try {
@@ -37,7 +58,7 @@ function init() {
     }
   }
 
-  // Footer year (if you have it)
+  // Footer year
   const year = document.getElementById("year");
   if (year) year.textContent = String(new Date().getFullYear());
 
@@ -50,11 +71,27 @@ function init() {
     buyForm.addEventListener("submit", async (e) => {
       e.preventDefault();
 
-      const org = (document.getElementById("orgName")?.value || "").trim();
-      const email = (document.getElementById("email")?.value || "").trim();
-      const risk = document.getElementById("riskAppetite")?.value || "";
-      const tools = document.getElementById("aiTools")?.value || "";
-      const data = document.getElementById("dataSensitivity")?.value || "";
+      // Honeypot (bots): if filled, DROP silently (or show generic message)
+      const honeypot = readHoneypot(buyForm);
+      if (honeypot) {
+        // Drop. No redirect. No logging.
+        setMsg(buyMsg, "Could not continue. Please try again.", "err");
+        return;
+      }
+
+      const fields = {
+        orgName: pickValue("orgName"),
+        email: pickValue("email"),
+
+        // Existing selects (now optional)
+        riskAppetite: pickValue("riskAppetite"),
+        aiTools: pickValue("aiTools"),
+        dataSensitivity: pickValue("dataSensitivity"),
+
+        // New selects (also optional unless you choose otherwise)
+        regEnvironment: pickValue("regEnvironment"),
+        aiAccessModel: pickValue("aiAccessModel"),
+      };
 
       // Validate config
       if (!STRIPE_PAYMENT_LINK || !STRIPE_PAYMENT_LINK.startsWith("https://")) {
@@ -62,13 +99,9 @@ function init() {
         return;
       }
 
-      // Validate inputs
-      if (!isValidEmail(email)) {
+      // Validate inputs (ONLY email required)
+      if (!isValidEmail(fields.email)) {
         setMsg(buyMsg, "Please enter a valid email address.", "err");
-        return;
-      }
-      if (!risk || !tools || !data) {
-        setMsg(buyMsg, "Please answer the 3 questions above.", "err");
         return;
       }
 
@@ -79,22 +112,36 @@ function init() {
       }
       setMsg(buyMsg, "", null);
 
-      // Log purchase intent (best-effort)
-      // We pack the custom answers into useCase so your current /api/lead.js email includes them.
-      const useCase =
-        `Purchase intent | Risk: ${risk} | Tools: ${tools} | Data: ${data}`;
+      // Build a summary that will definitely appear in your email (via useCase)
+      const summary = buildSummary(fields);
 
+      // Log purchase intent (best-effort)
       await postLead({
-        email,
-        orgName: org || null,
-        website: (document.getElementById("buyJourney")?.querySelector('input[name="website"]')?.value || "").trim(),
-        useCase,
+        // Core
+        email: fields.email,
+        orgName: fields.orgName || null,
+
+        // Important: keep honeypot field name for backend consistency (always empty here)
+        website: "",
+
+        // Keep current behaviour: pack answers into useCase string so you see them in email
+        useCase: `Purchase intent | ${summary}`,
+
+        // Also send structured fields for future template automation / better emails
+        answers: {
+          riskAppetite: fields.riskAppetite || null,
+          aiTools: fields.aiTools || null,
+          dataSensitivity: fields.dataSensitivity || null,
+          regEnvironment: fields.regEnvironment || null,
+          aiAccessModel: fields.aiAccessModel || null,
+        },
+
         page: location.href,
         ts: new Date().toISOString(),
       });
 
       // Redirect to Stripe (same tab = smoother journey)
-      window.location.href = buildStripeUrl(STRIPE_PAYMENT_LINK, email);
+      window.location.href = buildStripeUrl(STRIPE_PAYMENT_LINK, fields.email);
     });
   }
 
@@ -108,6 +155,13 @@ function init() {
   if (qForm) {
     qForm.addEventListener("submit", async (e) => {
       e.preventDefault();
+
+      // Honeypot (bots): drop
+      const honeypot = readHoneypot(qForm);
+      if (honeypot) {
+        setMsg(qFormMsg, "Could not send. Please try again.", "err");
+        return;
+      }
 
       const email = (qEmailEl?.value || "").trim();
       const message = (qTextEl?.value || "").trim();
@@ -126,8 +180,8 @@ function init() {
       const ok = await postLead({
         email,
         orgName: null,
+        website: "",
         useCase: `Question | ${message}`,
-        website: (document.getElementById("questionForm")?.querySelector('input[name="website"]')?.value || "").trim(),
         page: location.href,
         ts: new Date().toISOString(),
       });
