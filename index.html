@@ -179,6 +179,63 @@
               <option>Other / not sure yet</option>
             </select>
           </label>
+<label>
+  <span>Risk appetite</span>
+  <select id="riskAppetite" required>
+    <option value="" selected disabled>Select…</option>
+    <option>Low (strict controls)</option>
+    <option>Balanced</option>
+    <option>High (flexible / enablement-first)</option>
+  </select>
+</label>
+
+<label>
+  <span>Primary AI tools in scope</span>
+  <select id="aiTools" required>
+    <option value="" selected disabled>Select…</option>
+    <option>Microsoft Copilot (M365)</option>
+    <option>Copilot + ChatGPT</option>
+    <option>Mixed tools (staff choose)</option>
+    <option>Other / not sure yet</option>
+  </select>
+</label>
+
+<label>
+  <span>Data sensitivity focus</span>
+  <select id="dataSensitivity" required>
+    <option value="" selected disabled>Select…</option>
+    <option>Customer &amp; financial data</option>
+    <option>Personal data (GDPR)</option>
+    <option>Commercially sensitive / IP</option>
+    <option>All of the above</option>
+  </select>
+</label>
+
+<!-- NEW (required) -->
+<label>
+  <span>Primary regulatory environment</span>
+  <select id="regEnvironment" required>
+    <option value="" selected disabled>Select…</option>
+    <option>Financial services / regulated</option>
+    <option>Public sector</option>
+    <option>Healthcare / life sciences</option>
+    <option>SaaS / technology</option>
+    <option>General commercial</option>
+    <option>Other / mixed</option>
+  </select>
+</label>
+
+<!-- NEW (required) -->
+<label>
+  <span>AI access model to cover in the policy</span>
+  <select id="aiAccessModel" required>
+    <option value="" selected disabled>Select…</option>
+    <option>Approved enterprise AI tools only</option>
+    <option>Approved tools + limited public AI (non-sensitive only)</option>
+    <option>Allow public AI with controls (no sensitive data)</option>
+    <option>Not sure yet — keep it neutral</option>
+  </select>
+</label>
 
           <label>
             <span>Data sensitivity focus</span>
