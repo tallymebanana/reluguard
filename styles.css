@@ -215,3 +215,43 @@ button:disabled{opacity:.6;cursor:not-allowed}
     white-space: normal;
   }
 }
+/* --- Preview block (Conversion Sprint P1) --- */
+.previewBlock{
+  margin-bottom:14px;
+  padding:14px;
+  border:1px solid var(--border);
+  border-radius:16px;
+  background: rgba(15, 23, 42, .03);
+}
+
+.previewTitle{
+  font-weight:800;
+  font-size:14px;
+  color: var(--text);
+  margin-bottom:6px;
+}
+
+.previewSub{
+  font-size:13px;
+  color: var(--muted);
+  margin-bottom:10px;
+}
+
+.previewToc{
+  margin: 0;
+  padding-left: 18px;
+  color: var(--text);
+  font-size:13px;
+  line-height:1.5;
+}
+
+.previewToc li{
+  margin: 2px 0;
+}
+
+.previewNote{
+  margin-top:10px;
+  font-size:12px;
+  color: var(--muted2);
+}
+
