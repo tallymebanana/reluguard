@@ -451,3 +451,36 @@ button:disabled{opacity:.6;cursor:not-allowed}
   .navLinks{width: 100%; justify-content:flex-end;}
 }
 
+/* =========================
+   HERO BALANCE FIX
+   ========================= */
+
+.hero2{
+  display:grid;
+  grid-template-columns: 1.05fr .95fr;
+  gap:24px;
+  align-items:start;
+}
+
+/* Keep the right column purchase card visible, makes layout feel intentional */
+@media (min-width: 980px){
+  .offer{
+    position: sticky;
+    top: 92px; /* below sticky header */
+  }
+}
+
+/* The strip now lives below hero */
+.heroBelow{ padding: 0 18px 10px; }
+.heroBelow .strip{ margin-top: 0; }
+
+/* Better breathing room in the left */
+.heroCopy{
+  padding-right: 6px;
+}
+
+/* Mobile: stack normally */
+@media (max-width: 979px){
+  .hero2{ grid-template-columns: 1fr; }
+  .offer{ position: static; }
+}
