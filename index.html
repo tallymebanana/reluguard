@@ -34,10 +34,54 @@
   </header>
 
   <main class="container">
+
     <!-- HERO -->
     <section class="hero2">
+      <!-- Left: Product visual + proof -->
+      <div class="heroVisual">
+        <div class="productCard" aria-label="PolicySonic AI Usage Policy Template">
+          <div class="productMock" aria-hidden="true">
+            <div class="mockTop">AI USAGE POLICY</div>
+            <div class="mockMid">TEMPLATE</div>
+            <div class="mockBottom">Word + PDF</div>
+          </div>
+
+          <div class="productMeta">
+            <div class="productMetaTitle">AI Usage Policy Template</div>
+            <div class="productMetaSub">Ready-to-edit • Practical governance • Audit-friendly</div>
+
+            <div class="productMetaBadges" aria-label="What you receive">
+              <span class="tag">Word</span>
+              <span class="tag">PDF</span>
+              <span class="tag">DO / DON’T guidance</span>
+              <span class="tag">Roles + review model</span>
+            </div>
+
+            <div class="productMetaLine">
+              Delivery by email within <strong>1 business day</strong>.
+            </div>
+          </div>
+        </div>
+
+        <div class="riskRow" aria-label="Key risks covered">
+          <div class="riskCard">
+            <div class="riskTitle">Confidential data exposure</div>
+            <div class="riskText">Clear rules on what can/can’t be entered into AI tools.</div>
+          </div>
+          <div class="riskCard">
+            <div class="riskTitle">Public AI boundaries</div>
+            <div class="riskText">Practical boundaries for Copilot vs public AI tools.</div>
+          </div>
+          <div class="riskCard">
+            <div class="riskTitle">Accountability gaps</div>
+            <div class="riskText">Roles, oversight, approvals, and review cadence included.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Copy + CTA + buy form -->
       <div class="heroCopy">
-        <div class="kicker">AI governance — made practical.</div>
+        <div class="kicker">Practical governance. Zero fluff.</div>
 
         <h1>AI Usage Policy Template for businesses.</h1>
 
@@ -78,119 +122,113 @@
             <div class="stripText">Use a solid foundation, tailor it, and get it approved without weeks of back-and-forth.</div>
           </div>
         </div>
+
+        <!-- BUY CARD -->
+        <aside class="offer" id="buy">
+          <div class="offerTop">
+            <div class="offerTitle">Get the template</div>
+            <div class="offerPrice">
+              <span class="price">€79</span>
+              <span class="priceNote">one-time purchase</span>
+            </div>
+            <div class="offerSub">
+              Optional tailoring questions, then secure checkout via Stripe.
+              <strong>Delivery by email within 1 business day.</strong>
+            </div>
+          </div>
+
+          <form id="buyJourney" class="formCard">
+            <label>
+              <span>Organisation (optional)</span>
+              <input id="orgName" type="text" placeholder="e.g., Acme Ltd" autocomplete="organization" />
+            </label>
+
+            <label>
+              <span>Work email</span>
+              <input id="email" type="email" placeholder="you@company.com" autocomplete="email" required />
+            </label>
+
+            <!-- Honeypot (bots fill this). Humans never see it. -->
+            <div class="hp" aria-hidden="true">
+              <label>Website <input type="text" name="website" autocomplete="off" tabindex="-1"></label>
+            </div>
+
+            <div class="formGrid">
+              <label>
+                <span>Risk appetite (optional)</span>
+                <select id="riskAppetite">
+                  <option value="" selected disabled>Select…</option>
+                  <option>Low (strict controls)</option>
+                  <option>Balanced</option>
+                  <option>High (flexible / enablement-first)</option>
+                </select>
+              </label>
+
+              <label>
+                <span>Primary AI tools (optional)</span>
+                <select id="aiTools">
+                  <option value="" selected disabled>Select…</option>
+                  <option>Microsoft Copilot (M365)</option>
+                  <option>Copilot + ChatGPT</option>
+                  <option>Mixed tools (staff choose)</option>
+                  <option>Other / not sure yet</option>
+                </select>
+              </label>
+
+              <label>
+                <span>Data focus (optional)</span>
+                <select id="dataSensitivity">
+                  <option value="" selected disabled>Select…</option>
+                  <option>Customer &amp; financial data</option>
+                  <option>Personal data (GDPR)</option>
+                  <option>Commercially sensitive / IP</option>
+                  <option>All of the above</option>
+                </select>
+              </label>
+
+              <label>
+                <span>Reg environment (optional)</span>
+                <select id="regEnvironment">
+                  <option value="" selected disabled>Select…</option>
+                  <option>Financial services / regulated</option>
+                  <option>Public sector</option>
+                  <option>Healthcare / life sciences</option>
+                  <option>SaaS / technology</option>
+                  <option>General commercial</option>
+                  <option>Other / mixed</option>
+                </select>
+              </label>
+
+              <label class="full">
+                <span>AI access model to cover (optional)</span>
+                <select id="aiAccessModel">
+                  <option value="" selected disabled>Select…</option>
+                  <option>Approved enterprise AI tools only</option>
+                  <option>Approved tools + limited public AI (non-sensitive only)</option>
+                  <option>Allow public AI with controls (no sensitive data)</option>
+                  <option>Not sure yet — keep it neutral</option>
+                </select>
+              </label>
+            </div>
+
+            <button id="buyNowBtn" class="btnPrimary btnPrimaryFull" type="submit">
+              Continue to secure checkout
+            </button>
+
+            <div class="finePrint">
+              Checkout is hosted by Stripe. We’ll email the editable template to the address above within <strong>1 business day</strong>.
+            </div>
+
+            <div id="buyMsg" class="formMsg" aria-live="polite"></div>
+          </form>
+
+          <div class="offerFoot">
+            <div class="smallRow"><span class="tick">✓</span> Word + PDF included</div>
+            <div class="smallRow"><span class="tick">✓</span> No accounts, no subscription</div>
+            <div class="smallRow"><span class="tick">✓</span> Practical guidance (not legal prose)</div>
+          </div>
+        </aside>
       </div>
-
-      <!-- OFFER / FORM -->
-      <aside class="offer" id="buy">
-        <div class="offerTop">
-          <div class="offerTitle">Get the template</div>
-          <div class="offerPrice">
-            <span class="price">€79</span>
-            <span class="priceNote">one-time purchase</span>
-          </div>
-          <div class="offerSub">
-            Optional tailoring questions, then secure checkout via Stripe.
-            <strong>Delivery by email within 1 business day.</strong>
-          </div>
-        </div>
-
-        <form id="buyJourney" class="formCard">
-          <label>
-            <span>Organisation (optional)</span>
-            <input id="orgName" type="text" placeholder="e.g., Acme Ltd" autocomplete="organization" />
-          </label>
-
-          <label>
-            <span>Work email</span>
-            <input id="email" type="email" placeholder="you@company.com" autocomplete="email" required />
-          </label>
-
-          <!-- Honeypot (bots fill this). Humans never see it. -->
-          <div class="hp" aria-hidden="true">
-            <label>Website <input type="text" name="website" autocomplete="off" tabindex="-1"></label>
-          </div>
-
-          <div class="formGrid">
-            <label>
-              <span>Risk appetite (optional)</span>
-              <select id="riskAppetite">
-                <option value="" selected disabled>Select…</option>
-                <option>Low (strict controls)</option>
-                <option>Balanced</option>
-                <option>High (flexible / enablement-first)</option>
-              </select>
-            </label>
-
-            <label>
-              <span>Primary AI tools (optional)</span>
-              <select id="aiTools">
-                <option value="" selected disabled>Select…</option>
-                <option>Microsoft Copilot (M365)</option>
-                <option>Copilot + ChatGPT</option>
-                <option>Mixed tools (staff choose)</option>
-                <option>Other / not sure yet</option>
-              </select>
-            </label>
-
-            <label>
-              <span>Data focus (optional)</span>
-              <select id="dataSensitivity">
-                <option value="" selected disabled>Select…</option>
-                <option>Customer &amp; financial data</option>
-                <option>Personal data (GDPR)</option>
-                <option>Commercially sensitive / IP</option>
-                <option>All of the above</option>
-              </select>
-            </label>
-
-            <label>
-              <span>Reg environment (optional)</span>
-              <select id="regEnvironment">
-                <option value="" selected disabled>Select…</option>
-                <option>Financial services / regulated</option>
-                <option>Public sector</option>
-                <option>Healthcare / life sciences</option>
-                <option>SaaS / technology</option>
-                <option>General commercial</option>
-                <option>Other / mixed</option>
-              </select>
-            </label>
-
-            <label class="full">
-              <span>AI access model to cover (optional)</span>
-              <select id="aiAccessModel">
-                <option value="" selected disabled>Select…</option>
-                <option>Approved enterprise AI tools only</option>
-                <option>Approved tools + limited public AI (non-sensitive only)</option>
-                <option>Allow public AI with controls (no sensitive data)</option>
-                <option>Not sure yet — keep it neutral</option>
-              </select>
-            </label>
-          </div>
-
-          <button id="buyNowBtn" class="btnPrimary btnPrimaryFull" type="submit">
-            Continue to secure checkout
-          </button>
-
-          <div class="finePrint">
-            Checkout is hosted by Stripe. We’ll email the editable template to the address above within <strong>1 business day</strong>.
-          </div>
-
-          <div id="buyMsg" class="formMsg" aria-live="polite"></div>
-        </form>
-
-        <div class="offerFoot">
-          <div class="smallRow">
-            <span class="tick">✓</span> Word + PDF included
-          </div>
-          <div class="smallRow">
-            <span class="tick">✓</span> No accounts, no subscription
-          </div>
-          <div class="smallRow">
-            <span class="tick">✓</span> Practical guidance (not legal prose)
-          </div>
-        </div>
-      </aside>
     </section>
 
     <!-- CONTENT SECTIONS -->
@@ -328,3 +366,4 @@
   <script src="app.js" defer></script>
 </body>
 </html>
+
