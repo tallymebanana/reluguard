@@ -194,6 +194,7 @@ h1{
   font-size:14px;
   color:var(--muted2);
   line-height:1.5;
+  .bulletText { display:block; }
 }
 
 /* ✅ Fix for “label + description” bullets */
