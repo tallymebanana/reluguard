@@ -196,6 +196,13 @@ h1{
   line-height:1.5;
 }
 
+/* ✅ Fix for “label + description” bullets */
+.bullets li strong{
+  font-weight:700;
+  margin-right:6px;
+  white-space:normal;
+}
+
 .dot{
   width:10px;
   height:10px;
@@ -565,3 +572,4 @@ input:focus, select:focus{
 
 .footerRight{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
 .footerRight a:hover{text-decoration:underline}
+
