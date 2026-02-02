@@ -1,0 +1,211 @@
+// app.js (FULL NEW) — PolicySonic
+// ✅ Only email is required
+// ✅ All selects optional
+// ✅ Honeypot ("website") is silently dropped (no logging, no redirect)
+// ✅ Sends both a readable summary (useCase) + structured answers (answers)
+// ✅ Redirects to Stripe Payment Link with prefilled_email
+
+function init() {
+  // 🔧 Put your Stripe Payment Link here (must start with https://)
+  const STRIPE_PAYMENT_LINK = "https://buy.stripe.com/dRm7sE8UC0A4d7g1QaeUU01";
+
+  // ---------- helpers ----------
+  function setMsg(el, text, type) {
+    if (!el) return;
+    el.textContent = text || "";
+    el.classList.remove("ok", "err");
+    if (type === "ok") el.classList.add("ok");
+    if (type === "err") el.classList.add("err");
+  }
+
+  function isValidEmail(email) {
+    const e = String(email || "").trim();
+    return e.includes("@") && e.includes(".");
+  }
+
+  function buildStripeUrl(base, email) {
+    const u = new URL(base);
+    // Stripe Payment Links supports prefilled_email
+    u.searchParams.set("prefilled_email", email);
+    return u.toString();
+  }
+
+  function readHoneypot(formEl) {
+    return (formEl?.querySelector('input[name="website"]')?.value || "").trim();
+  }
+
+  function pickValue(id) {
+    return (document.getElementById(id)?.value || "").trim();
+  }
+
+  function buildSummary(fields) {
+    // Only include non-empty values in the summary (keeps email readable)
+    const parts = [];
+    if (fields.orgName) parts.push(`Org: ${fields.orgName}`);
+    if (fields.riskAppetite) parts.push(`Risk: ${fields.riskAppetite}`);
+    if (fields.aiTools) parts.push(`Tools: ${fields.aiTools}`);
+    if (fields.dataSensitivity) parts.push(`Data: ${fields.dataSensitivity}`);
+    if (fields.regEnvironment) parts.push(`Reg: ${fields.regEnvironment}`);
+    if (fields.aiAccessModel) parts.push(`Access model: ${fields.aiAccessModel}`);
+
+    return parts.length ? parts.join(" | ") : "(no extra answers provided)";
+  }
+
+  async function postLead(payload) {
+    // Best-effort: do not block purchase if logging fails
+    try {
+      const res = await fetch("/api/lead", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      return res.ok;
+    } catch {
+      return false;
+    }
+  }
+
+  // Footer year
+  const year = document.getElementById("year");
+  if (year) year.textContent = String(new Date().getFullYear());
+
+  // ---------- BUY JOURNEY ----------
+  const buyForm = document.getElementById("buyJourney");
+  const buyMsg = document.getElementById("buyMsg");
+  const buyNowBtn = document.getElementById("buyNowBtn");
+
+  if (buyForm) {
+    buyForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      // Honeypot (bots): if filled, DROP silently (no logging, no redirect)
+      const honeypot = readHoneypot(buyForm);
+      if (honeypot) {
+        // Pretend success to avoid bot retries
+        setMsg(buyMsg, "Opening secure checkout…", "ok");
+        try { buyForm.reset(); } catch {}
+        return;
+      }
+
+      const fields = {
+        orgName: pickValue("orgName"),
+        email: pickValue("email"),
+
+        // Optional selects
+        riskAppetite: pickValue("riskAppetite"),
+        aiTools: pickValue("aiTools"),
+        dataSensitivity: pickValue("dataSensitivity"),
+        regEnvironment: pickValue("regEnvironment"),
+        aiAccessModel: pickValue("aiAccessModel"),
+      };
+
+      // Validate config
+      if (!STRIPE_PAYMENT_LINK || !STRIPE_PAYMENT_LINK.startsWith("https://")) {
+        setMsg(buyMsg, "Stripe link not configured yet.", "err");
+        return;
+      }
+
+      // Validate inputs (ONLY email required)
+      if (!isValidEmail(fields.email)) {
+        setMsg(buyMsg, "Please enter a valid email address.", "err");
+        return;
+      }
+
+      // UI state
+      if (buyNowBtn) {
+        buyNowBtn.disabled = true;
+        buyNowBtn.textContent = "Opening secure checkout…";
+      }
+      setMsg(buyMsg, "", null);
+
+      // Build a readable summary that will appear in your lead email
+      const summary = buildSummary(fields);
+
+      // Log purchase intent (best-effort)
+      await postLead({
+        // Core
+        email: fields.email,
+        orgName: fields.orgName || null,
+
+        // Honeypot field name for backend consistency (empty here)
+        website: "",
+
+        // Keep readable summary
+        useCase: `Purchase intent | ${summary}`,
+
+        // Structured answers for future automation
+        answers: {
+          riskAppetite: fields.riskAppetite || "",
+          aiTools: fields.aiTools || "",
+          dataSensitivity: fields.dataSensitivity || "",
+          regEnvironment: fields.regEnvironment || "",
+          aiAccessModel: fields.aiAccessModel || "",
+        },
+
+        page: location.href,
+        ts: new Date().toISOString(),
+      });
+
+      // Redirect to Stripe (same tab = smoother journey)
+      window.location.href = buildStripeUrl(STRIPE_PAYMENT_LINK, fields.email);
+    });
+  }
+
+  // ---------- QUESTION FORM ----------
+  const qForm = document.getElementById("questionForm");
+  const qEmailEl = document.getElementById("qEmail");
+  const qTextEl = document.getElementById("qMsg");
+  const qBtn = document.getElementById("qBtn");
+  const qFormMsg = document.getElementById("qFormMsg");
+
+  if (qForm) {
+    qForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      // Honeypot (bots): drop silently
+      const honeypot = readHoneypot(qForm);
+      if (honeypot) {
+        setMsg(qFormMsg, "Sent — we’ll reply by email.", "ok");
+        try { qForm.reset(); } catch {}
+        return;
+      }
+
+      const email = (qEmailEl?.value || "").trim();
+      const message = (qTextEl?.value || "").trim();
+
+      if (!isValidEmail(email) || !message) {
+        setMsg(qFormMsg, "Please enter your email and a message.", "err");
+        return;
+      }
+
+      if (qBtn) {
+        qBtn.disabled = true;
+        qBtn.textContent = "Sending…";
+      }
+      setMsg(qFormMsg, "", null);
+
+      const ok = await postLead({
+        email,
+        orgName: null,
+        website: "",
+        useCase: `Question | ${message}`,
+        page: location.href,
+        ts: new Date().toISOString(),
+      });
+
+      if (ok) {
+        setMsg(qFormMsg, "Sent — we’ll reply by email.", "ok");
+        try { qForm.reset(); } catch {}
+      } else {
+        setMsg(qFormMsg, "Could not send. Please try again.", "err");
+      }
+
+      if (qBtn) {
+        qBtn.disabled = false;
+        qBtn.textContent = "Send";
+      }
+    });
+  }
+}
+
+init();
